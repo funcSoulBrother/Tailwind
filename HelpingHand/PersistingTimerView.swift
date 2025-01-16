@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PersistingTimerView: View {
-    //just testing oh yeah just a test
     @State private var remainingTime: Int = 30 // Total countdown in seconds
     @State private var endTime: Date?
     @State private var isTimerActive = false

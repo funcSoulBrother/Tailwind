@@ -12,6 +12,7 @@ struct HelpingHandApp: App {
     var body: some Scene {
         WindowGroup {
             GuideView()
+//            FunWithTesting()
         }
     }
 }
