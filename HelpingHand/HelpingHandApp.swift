@@ -11,8 +11,10 @@ import SwiftUI
 struct HelpingHandApp: App {
     var body: some Scene {
         WindowGroup {
-            GuideView()
+//            GuideView()
+            ContentView()
 //            FunWithTesting()
+//            FunWithNotifications()
         }
     }
 }

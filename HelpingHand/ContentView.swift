@@ -26,12 +26,21 @@ struct ContentView: View {
                     Label("Home", systemImage: "house.fill")
                 }
                 .tag(0)
-            TestView()
-//            GuideView()
+//            TestView()
+            GuideView()
                 .tabItem {
                     Label("Step-by-Step Guide", systemImage: "map.fill")
                 }
                 .tag(1)
+        }
+        .onAppear() {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                if success {
+                    print("All set!")
+                } else if let error {
+                    print(error.localizedDescription)
+                }
+            }
         }
         .accentColor(.yellow)
 //        .sheet(isPresented: $willOnboardingScreenShow) {

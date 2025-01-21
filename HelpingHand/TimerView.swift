@@ -1,26 +1,28 @@
 //
-//  SwiftUIView.swift
+//  TimerView.swift
 //  HelpingHand
 //
 //  Created by Daniel Marsh on 12/22/24.
 //
+import UserNotifications
 import SwiftUI
 
 struct TimerView: View {
     @Environment(\.scenePhase) var scenePhase
-    @State private var timeRemaining = 60 // Set your countdown time in seconds (1,800 for 30 minutes)
+    @State private var timeRemaining = 30 // Set your countdown time in seconds (1,800 for 30 minutes)
     @State private var timerActive = false
     @State private var timer: Timer?
-    @State private var showAlert = false
+    @State private var showStartOverAlert = false
+    @State private var showResetTimerAlert = false
     @State private var startTime: Date?
     @AppStorage("CurrentRound") var currentRound = 1
-//    @AppStorage("TimerStartTime") var storedStartTime: Date?
     @AppStorage("TimerEndTime") var storedEndTime: Date?
-//    @AppStorage("TimerDuration") var storedDuration: Int = 0
 
     var body: some View {
         VStack {
             Text(formatTime(timeRemaining))
+                .contentTransition(.numericText())
+                .animation(.linear, value: timeRemaining)
                 .font(.largeTitle)
                 .padding()
 
@@ -43,13 +45,23 @@ struct TimerView: View {
                 }
                 .disabled(!timerActive)
 
-                Button(action: resetTimer) {
-                    Text("Reset")
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+//                Button(action: resetTimer) {
+//                    Text("Reset")
+                Button("Reset") {
+                    showResetTimerAlert = true
                 }
+                .padding()
+                .background(Color.red)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .alert("Reset?", isPresented: $showResetTimerAlert) {
+                            Button("No", role: .cancel) {}
+                            Button("Yes I'm sure, sucka.") {
+                                resetTimer()
+                            }
+                        } message: {
+                            Text("Are you sure you want to reset the timer back to 30 minutes?")
+                        }
 
             }
             if timeRemaining == 0 {
@@ -60,13 +72,13 @@ struct TimerView: View {
                 }
             }
             Button("Start from Round 1") {
-                showAlert = true
+                showStartOverAlert = true
             }
             .padding()
             .background(Color.brown)
             .foregroundColor(.white)
             .cornerRadius(10)
-            .alert("Start Over?", isPresented: $showAlert) {
+            .alert("Start Over?", isPresented: $showStartOverAlert) {
                         Button("No", role: .cancel) {}
                         Button("Yes I'm sure, fool.") {
                             startOver()
@@ -93,7 +105,19 @@ struct TimerView: View {
         timerActive = true
         startTime = Date()
         storedEndTime = startTime!.addingTimeInterval(TimeInterval(timeRemaining))
-//        storedDuration = timeRemaining
+        
+        if timeRemaining > 0 {
+            let content = UNMutableNotificationContent()
+            content.title = "Time is Up!"
+            content.body = "Round \(currentRound) is done, return to Helping Hand to move on to Round \(currentRound + 1)!"
+            content.sound = UNNotificationSound.default
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeRemaining), repeats: false)
+            
+            let request = UNNotificationRequest(identifier: "TimerEndNotification", content: content, trigger: trigger)
+            
+                UNUserNotificationCenter.current().add(request)
+        }
         
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             if timeRemaining > 0 {
@@ -108,11 +132,12 @@ struct TimerView: View {
     func pauseTimer() {
         timerActive = false
         timer?.invalidate()
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["TimerEndNotification"])
     }
 
     func resetTimer() {
         pauseTimer()
-        timeRemaining = 60 // Reset to initial time
+        timeRemaining = 30
     }
 
     func formatTime(_ seconds: Int) -> String {
@@ -134,19 +159,6 @@ struct TimerView: View {
                 timeRemaining = 0
             }
         } else { return }
-//        guard let startTime = storedStartTime else {
-//            return
-//        }
-//        
-//        let elapsedTime = Int(Date().timeIntervalSince(startTime))
-//        let remainingTime = max(0, storedDuration - elapsedTime)
-//        
-//        timeRemaining = remainingTime
-//        timerActive = remainingTime > 0
-//        
-//        if timerActive {
-//            startTimer()
-//        }
     }
 }
 

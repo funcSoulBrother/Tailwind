@@ -10,52 +10,55 @@ import SwiftUI
 struct GuideView: View {
     @AppStorage("CurrentRound") var currentRound = 1
     @State var extraActionsScreenShowing = false
-   
+    
     var body: some View {
         let timerView = TimerView()
         
-        if currentRound < 4 {
-            Text("Round \(currentRound)")
-                .font(.largeTitle)
-            VStack(alignment: .leading) {
-                HStack {
-                    Image(systemName: "circle")
-                    Text("Feed your buddy 3 berries")
+        ScrollView {
+            if currentRound < 4 {
+                Text("Round \(currentRound)")
+                    .font(.largeTitle)
+                    .padding()
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "circle")
+                        Text("Feed your buddy 3 berries")
+                    }
+                    HStack {
+                        Image(systemName: "circle")
+                        Text("Play with your buddy")
+                    }
+                    HStack {
+                        Image(systemName: "circle")
+                        Text("Take a picture of your buddy")
+                    }
+                    HStack {
+                        Image(systemName: "circle")
+                        Text("Battle a team leader")
+                    }
+                    Text("Optional: if possible, perform one of the following extra actions to make your buddy excited half an hour sooner:")
                 }
-                HStack {
-                    Image(systemName: "circle")
-                    Text("Play with your buddy")
+                            Button("List of Extra Actions") {
+                                extraActionsScreenShowing = true
+                            }
+                .padding()
+                .sheet(isPresented: $extraActionsScreenShowing) {
+                    ExtraActionsView()
                 }
-                HStack {
-                    Image(systemName: "circle")
-                    Text("Take a picture of your buddy")
-                }
-                HStack {
-                    Image(systemName: "circle")
-                    Text("Battle a team leader")
-                }
-                Text("Optional: if possible, perform one of the following extra actions to make your buddy excited half an hour sooner:")
+                timerView
             }
-            Button("List of Extra Actions") {
-                extraActionsScreenShowing = true
+            else if currentRound == 4 {
+                Text("Round \(currentRound)")
+                    .font(.largeTitle)
+                Text("It's Round 4, boiiiii!!!!!!")
+                timerView
             }
-            .padding()
-            .sheet(isPresented: $extraActionsScreenShowing) {
-                ExtraActionsView()
+            else {
+                Text("Round \(currentRound)")
+                    .font(.largeTitle)
+                Text("Wow that's a whole lotta rounds!")
+                timerView
             }
-            timerView
-        }
-        else if currentRound == 4 {
-            Text("Round \(currentRound)")
-                .font(.largeTitle)
-            Text("It's Round 4, boiiiii!!!!!!")
-            timerView
-        }
-        else {
-            Text("Round \(currentRound)")
-                .font(.largeTitle)
-            Text("Wow that's a whole lotta rounds!")
-            timerView
         }
     }
 }
