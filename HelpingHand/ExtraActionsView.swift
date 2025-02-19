@@ -16,28 +16,22 @@ struct ExtraActionsView: View {
             .padding()
         VStack(alignment: .leading){
             HStack {
-                Image(systemName: "circle")
-                Text("Participate in a GO Rocket battle")
+                Text("• Participate in a GO Rocket battle")
             }
             HStack {
-                Image(systemName: "circle")
-                Text("Earn a heart walking with your buddy")
+                Text("• Earn a heart walking with your buddy")
             }
             HStack {
-                Image(systemName: "circle")
-                Text("Visit a new place with your buddy")
+                Text("• Visit a new place with your buddy")
             }
             HStack {
-                Image(systemName: "circle")
-                Text("Follow a route with your buddy")
+                Text("• Follow a route with your buddy")
             }
             HStack {
-                Image(systemName: "circle")
-                Text("Receive a gift from your buddy")
+                Text("• Receive a gift from your buddy")
             }
             HStack {
-                Image(systemName: "circle")
-                Text("Receive a souvenir from your buddy")
+                Text("• Receive a souvenir from your buddy")
             }
         }
         Button("Got it, now get out of my face.") {

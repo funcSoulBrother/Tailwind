@@ -27,7 +27,7 @@ struct ContentView: View {
                 }
                 .tag(0)
 //            TestView()
-            GuideView()
+            TimerView()
                 .tabItem {
                     Label("Step-by-Step Guide", systemImage: "map.fill")
                 }
@@ -50,11 +50,11 @@ struct ContentView: View {
     }
 }
 
-struct TestView: View {
-    var body: some View {
-        Text("Ya it worked?")
-    }
-}
+//struct TestView: View {
+//    var body: some View {
+//        Text("Ya it worked?")
+//    }
+//}
 
 #Preview {
     ContentView()
