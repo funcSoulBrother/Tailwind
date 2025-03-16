@@ -6,14 +6,25 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		29CBCF872D714336004E2E4D /* StartApp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29CBCF862D714336004E2E4D /* StartApp.xcframework */; };
+		4BA940082113918EA99F0D2D /* Pods_Helping_Hand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12408D9D1A76EB2EB80672A4 /* Pods_Helping_Hand.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		29EFE3872D18D68300BC547D /* Helping Hand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Helping Hand.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		12408D9D1A76EB2EB80672A4 /* Pods_Helping_Hand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Helping_Hand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29CBCF722D7139D5004E2E4D /* Helping Hand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Helping Hand.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29CBCF862D714336004E2E4D /* StartApp.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = StartApp.xcframework; path = Pods/StartAppSDK/StartApp.xcframework; sourceTree = "<group>"; };
+		A8A1AC02F3232EE82BBA3A15 /* Pods-Tailwind.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tailwind.debug.xcconfig"; path = "Target Support Files/Pods-Tailwind/Pods-Tailwind.debug.xcconfig"; sourceTree = "<group>"; };
+		AF008987614E4C5A4EFD3309 /* Pods-Tailwind.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tailwind.release.xcconfig"; path = "Target Support Files/Pods-Tailwind/Pods-Tailwind.release.xcconfig"; sourceTree = "<group>"; };
+		E49423396AC4B5E5BE962729 /* Pods-Helping Hand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Helping Hand.debug.xcconfig"; path = "Target Support Files/Pods-Helping Hand/Pods-Helping Hand.debug.xcconfig"; sourceTree = "<group>"; };
+		E56A906BC2DD233D834013DF /* Pods-Helping Hand.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Helping Hand.release.xcconfig"; path = "Target Support Files/Pods-Helping Hand/Pods-Helping Hand.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		29EFE3892D18D68300BC547D /* Helping Hand */ = {
+		29EFE3892D18D68300BC547D /* Tailwind */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Helping Hand";
+			path = Tailwind;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +34,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29CBCF872D714336004E2E4D /* StartApp.xcframework in Frameworks */,
+				4BA940082113918EA99F0D2D /* Pods_Helping_Hand.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,17 +45,31 @@
 		29EFE37E2D18D68300BC547D = {
 			isa = PBXGroup;
 			children = (
-				29EFE3892D18D68300BC547D /* Helping Hand */,
-				29EFE3882D18D68300BC547D /* Products */,
+				29EFE3892D18D68300BC547D /* Tailwind */,
+				53F8DD50E251BC0C32806FA6 /* Pods */,
+				FEE3943F80E6A9E3AC59A07A /* Frameworks */,
+				29CBCF722D7139D5004E2E4D /* Helping Hand.app */,
 			);
 			sourceTree = "<group>";
 		};
-		29EFE3882D18D68300BC547D /* Products */ = {
+		53F8DD50E251BC0C32806FA6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				29EFE3872D18D68300BC547D /* Helping Hand.app */,
+				E49423396AC4B5E5BE962729 /* Pods-Helping Hand.debug.xcconfig */,
+				E56A906BC2DD233D834013DF /* Pods-Helping Hand.release.xcconfig */,
+				A8A1AC02F3232EE82BBA3A15 /* Pods-Tailwind.debug.xcconfig */,
+				AF008987614E4C5A4EFD3309 /* Pods-Tailwind.release.xcconfig */,
 			);
-			name = Products;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FEE3943F80E6A9E3AC59A07A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29CBCF862D714336004E2E4D /* StartApp.xcframework */,
+				12408D9D1A76EB2EB80672A4 /* Pods_Helping_Hand.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -52,22 +79,22 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29EFE3952D18D68400BC547D /* Build configuration list for PBXNativeTarget "Helping Hand" */;
 			buildPhases = (
+				4AAD2D661E69B24DB2AE65D8 /* [CP] Check Pods Manifest.lock */,
 				29EFE3832D18D68300BC547D /* Sources */,
 				29EFE3842D18D68300BC547D /* Frameworks */,
 				29EFE3852D18D68300BC547D /* Resources */,
+				35D773BE67299CAC62E31FF8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				29EFE3892D18D68300BC547D /* Helping Hand */,
+				29EFE3892D18D68300BC547D /* Tailwind */,
 			);
 			name = "Helping Hand";
-			packageProductDependencies = (
-			);
 			productName = HelpingHand;
-			productReference = 29EFE3872D18D68300BC547D /* Helping Hand.app */;
+			productReference = 29CBCF722D7139D5004E2E4D /* Helping Hand.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -95,7 +122,7 @@
 			mainGroup = 29EFE37E2D18D68300BC547D;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 29EFE3882D18D68300BC547D /* Products */;
+			productRefGroup = 29EFE37E2D18D68300BC547D;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -113,6 +140,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35D773BE67299CAC62E31FF8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Helping Hand/Pods-Helping Hand-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Helping Hand/Pods-Helping Hand-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Helping Hand/Pods-Helping Hand-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4AAD2D661E69B24DB2AE65D8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Helping Hand-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		29EFE3832D18D68300BC547D /* Sources */ = {
@@ -246,29 +315,33 @@
 		};
 		29EFE3962D18D68400BC547D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E49423396AC4B5E5BE962729 /* Pods-Helping Hand.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Helping Hand/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Tailwind/Preview Content\"";
 				DEVELOPMENT_TEAM = ZR6QK73PFS;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Helping Hand";
+				INFOPLIST_FILE = "Helping-Hand-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Tailwind;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This data will be used to deliver personalized ads to you. Seriously, I'm a Pokémon Go nerd. I'm too busy trying to get a shiny Sandyghast to look at your Google searches.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.CresylViolet.Helping-Hand";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.CresylViolet.Tailwind;
+				PRODUCT_NAME = "Helping Hand";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -277,29 +350,33 @@
 		};
 		29EFE3972D18D68400BC547D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E56A906BC2DD233D834013DF /* Pods-Helping Hand.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Helping Hand/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Tailwind/Preview Content\"";
 				DEVELOPMENT_TEAM = ZR6QK73PFS;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Helping Hand";
+				INFOPLIST_FILE = "Helping-Hand-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Tailwind;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This data will be used to deliver personalized ads to you. Seriously, I'm a Pokémon Go nerd. I'm too busy trying to get a shiny Sandyghast to look at your Google searches.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.CresylViolet.Helping-Hand";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.CresylViolet.Tailwind;
+				PRODUCT_NAME = "Helping Hand";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

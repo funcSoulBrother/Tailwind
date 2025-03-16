@@ -1,0 +1,6 @@
+framework module Pods_Helping_Hand {
+  umbrella header "Pods-Helping Hand-umbrella.h"
+
+  export *
+  module * { export * }
+}
