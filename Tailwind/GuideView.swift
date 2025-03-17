@@ -159,97 +159,98 @@ struct GuideView: View {
                 .sheet(isPresented: $helpScreenShowing) {
                     HowToUseScreenView()
                 }
-                
-                VStack {
-                    Text(formatTime(timeRemaining))
-                        .contentTransition(.numericText())
-                        .animation(.linear, value: timeRemaining)
-                        .font(.largeTitle)
-                        .padding()
-                    
-                    if timeRemaining != 0 {
-                        if round1Tasks.allSatisfy({ $0.isCompleted }) || round2Or4Tasks.allSatisfy({ $0.isCompleted}) || round3Tasks.allSatisfy({ $0.isCompleted}) {
-                            //ACTIVE BUTTONS (AFTER EVERYTHING IS COMPLETED)
-                            HStack {
-                                Button(action: startTimer) {
-                                    Text("Start")
-                                        .padding()
-                                        .background(Color("ChuSecondary"))
-                                        .foregroundColor(.white)
-                                        .cornerRadius(10)
-                                }
-                                .disabled(timerActive)
-                                
-                                Button(action: pauseTimer) {
-                                    Text("Pause")
-                                        .padding()
-                                        .background(Color("ChuTertiary"))
-                                        .foregroundColor(colorScheme == .dark ? .black : .white)
-                                        .cornerRadius(10)
-                                }
-                                .disabled(!timerActive)
-                                
-                                Button("Reset") {
-                                    showResetTimerAlert = true
-                                }
-                                .padding()
-                                .background(Color("ChuQuaternary"))
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .alert("Reset?", isPresented: $showResetTimerAlert) {
-                                    Button("No", role: .cancel) {}
-                                    Button("Yes I'm sure") {
-                                        resetTimer()
+                    VStack {
+                        if currentRound <= 4 {
+                        Text(formatTime(timeRemaining))
+                            .contentTransition(.numericText())
+                            .animation(.linear, value: timeRemaining)
+                            .font(.largeTitle)
+                            .padding()
+                        
+                        if timeRemaining != 0 {
+                            if round1Tasks.allSatisfy({ $0.isCompleted }) || round2Or4Tasks.allSatisfy({ $0.isCompleted}) || round3Tasks.allSatisfy({ $0.isCompleted}) {
+                                //ACTIVE BUTTONS (AFTER EVERYTHING IS COMPLETED)
+                                HStack {
+                                    Button(action: startTimer) {
+                                        Text("Start")
+                                            .padding()
+                                            .background(Color("ChuSecondary"))
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
                                     }
-                                } message: {
-                                    Text("Are you sure you want to reset the timer back to 30 minutes?")
+                                    .disabled(timerActive)
+                                    
+                                    Button(action: pauseTimer) {
+                                        Text("Pause")
+                                            .padding()
+                                            .background(Color("ChuTertiary"))
+                                            .foregroundColor(colorScheme == .dark ? .black : .white)
+                                            .cornerRadius(10)
+                                    }
+                                    .disabled(!timerActive)
+                                    
+                                    Button("Reset") {
+                                        showResetTimerAlert = true
+                                    }
+                                    .padding()
+                                    .background(Color("ChuQuaternary"))
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .alert("Reset?", isPresented: $showResetTimerAlert) {
+                                        Button("No", role: .cancel) {}
+                                        Button("Yes I'm sure") {
+                                            resetTimer()
+                                        }
+                                    } message: {
+                                        Text("Are you sure you want to reset the timer back to 30 minutes?")
+                                    }
+                                }
+                                
+                            }
+                            //INACTIVE BUTTONS
+                            else {
+                                HStack {
+                                    Button("Start") {
+                                        print("This Start button is currently disabled.")
+                                    }
+                                    .padding()
+                                    .background(Color(UIColor.secondarySystemBackground))
+                                    .foregroundColor(.secondary)
+                                    .cornerRadius(10)
+                                    
+                                    Button("Pause") {
+                                        print("This Pause button doesn't seem to do anything...")
+                                    }
+                                    .padding()
+                                    .background(Color(UIColor.secondarySystemBackground))
+                                    .foregroundColor(.secondary)
+                                    .cornerRadius(10)
+                                    
+                                    Button("Reset") {
+                                        print("This Reset button does nothing lol!")
+                                    }
+                                    .padding()
+                                    .background(Color(UIColor.secondarySystemBackground))
+                                    .foregroundColor(.secondary)
+                                    .cornerRadius(10)
                                 }
                             }
-                            
                         }
-                        //INACTIVE BUTTONS
-                        else {
-                            HStack {
-                                Button("Start") {
-                                    print("This Start button is currently disabled.")
-                                }
-                                .padding()
-                                .background(Color(UIColor.secondarySystemBackground))
-                                .foregroundColor(.secondary)
-                                .cornerRadius(10)
-                                
-                                Button("Pause") {
-                                    print("This Pause button doesn't seem to do anything...")
-                                }
-                                .padding()
-                                .background(Color(UIColor.secondarySystemBackground))
-                                .foregroundColor(.secondary)
-                                .cornerRadius(10)
-                                
-                                Button("Reset") {
-                                    print("This Reset button does nothing lol!")
-                                }
-                                .padding()
-                                .background(Color(UIColor.secondarySystemBackground))
-                                .foregroundColor(.secondary)
-                                .cornerRadius(10)
+                        if timeRemaining == 0 {
+                            Button("Start Round \(currentRound + 1)") {
+                                currentRound += 1
+                                print("Round \(currentRound)")
+                                resetTimer()
+                                resetTasks()
                             }
-                        }
-                    }
-                    if timeRemaining == 0 {
-                        Button("Start Round \(currentRound + 1)") {
-                            currentRound += 1
-                            print("Round \(currentRound)")
-                            resetTimer()
-                            resetTasks()
-                        }
-                        .fontWeight(.semibold)
-                        .padding(14)
-                        .background(isBlinking ? Color(Color("ChuSecondary")) : Color("ChuQuaternary"))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                        .onAppear {
-                            startBlinking()
+                            .fontWeight(.semibold)
+                            .padding(14)
+                            .background(isBlinking ? Color(Color("ChuSecondary")) : Color("ChuQuaternary"))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .onAppear {
+                                startBlinking()
+                            }
                         }
                     }
                     if currentRound == 1 {

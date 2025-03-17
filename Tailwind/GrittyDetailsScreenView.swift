@@ -36,11 +36,12 @@ struct GrittyDetailsScreenView: View {
                 Text("Yes! This guide assumes that you can only do the bare minimum; that is, things you can do from anywhere without any other players. But if you can perform just 1 of the following extra actions any time during the process, it’ll take 30 minutes off of the total time:")
                     .padding()
                 Text("""
-                        • Battle a GO Team Rocket member
+                        • Battle a Team GO Rocket member
                         • Battle in the GBL
                         • Battle a friend
                         • Battle in a gym
                         • Battle in a raid
+                        • Battle in a Max Battle
                         • Walk 2km with your buddy
                         • Receive an item from your buddy
                         • Receive a souvenir from your buddy
@@ -49,7 +50,7 @@ struct GrittyDetailsScreenView: View {
                         • Follow a route with your buddy
                         """)
                 .fontWeight(.light)
-                Text("Probably the easiest of these to do is battling a GO Team Rocket member. Try to time the process so that a GO Rocket balloon shows up at some point during the process and you’re good to go.")
+                Text("Probably the easiest of these to do is battling a Team GO Rocket member. Try to time the process so that a Rocket balloon shows up at some point during the process and you’re good to go.")
                     .padding()
                 Text("Tips & Tricks")
                     .font(.largeTitle)
@@ -63,7 +64,7 @@ struct GrittyDetailsScreenView: View {
                 Text("""
                         Round 1: 3 berries (takes your buddy’s belly from empty to full, earns first Heart)
                         Round 2: 1 berry
-                        Round 3: 2 berries (after an hour your buddy is only partially full, earns second Heart)
+                        Round 3: 2 berries (after an hour your buddy is only partially full, 2 berries makes buddy full and earns second Heart)
                         Round 4: 1 berry
                         Round 5: 2 berries (earns third Heart)
                         """)
@@ -81,20 +82,21 @@ struct GrittyDetailsScreenView: View {
                     .padding()
                 Text("""
                         Team Leader Battles: you can run
-                        GO Rocket Battles: you can run
+                        Team GO Rocket Battles: you can run
                         GBL Battles: you have to complete the battle
-                        Other PvP Battles: TBD
-                        Gym Battles: TBD
+                        Other PvP Battles: you have to complete the battle
+                        Gym Battles: you have to finish a battle against 1 pokémon
                         Raids: you have to finish the raid
+                        Max Battles: TBD
                         """)
                 .fontWeight(.light)
                 Text("You may already know that in order to get battling Hearts your buddy has to be adventuring with you (or you had to have given your buddy 3 berries first). However, this isn’t the case with Emotion Points. You can give your buddy 1 berry each round and each battle will still count towards making it excited.")
                     .padding()
-                Text("Earlier I stated that each task that earns Emotion Points has a 30 minute cooldown period and this is the case with battles as well. However, different types of battles have their own cooldown periods. For example, battling a team leader 3 times in 30 minutes will only count once toward increasing your buddy’s Emotion Points, but battling a GO Rocket member, a team leader, and a gym within the same 30 minute period will count 3 times.")
+                Text("Earlier I stated that each task that earns Emotion Points has a 30 minute cooldown period and this is the case with battles as well. However, different types of battles have their own cooldown periods. For example, battling a team leader 3 times in 30 minutes will only count once toward increasing your buddy’s Emotion Points, but battling a Team GO Rocket member, a team leader, and a gym within the same 30 minute period will count 3 times.")
                     .padding()
                 
                     
-                Button("Alright") {
+                Button("Alright!") {
                     dismiss()
                 }
                 .frame(width: 100)
@@ -102,7 +104,7 @@ struct GrittyDetailsScreenView: View {
                 .background(Color("ChuSecondary"))
                 .foregroundColor(.white)
                 .cornerRadius(10)
-                Text("* Please note that I’ve tested all of these mechanics myself and I can attest that they’re all accurate at the time of this writing. However, any of these rules can be changed by Niantic at any time whether it be on purpose or unintended glitch. I strive for this to be the definitive Pokémon Go excited guide, so if you notice any discrepancies between this guide and the in-game mechanics, please don’t hesitate to email me at cresylvioletapps@icloud.com")
+                Text("* Please note that I’ve tested all of these mechanics myself and I can attest that they’re all accurate at the time of writing. However, any of these rules can be changed by Niantic at any time whether it be on purpose or unintended glitch. I strive for this to be the definitive Pokémon Go excited guide, so if you notice any discrepancies between this guide and the in-game mechanics, please don’t hesitate to email me at cresylvioletapps@icloud.com")
                     .padding()
             }
         }

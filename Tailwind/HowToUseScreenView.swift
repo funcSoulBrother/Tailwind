@@ -25,7 +25,7 @@ struct HowToUseScreenView: View {
     var body: some View {
         ScrollView {
             Spacer()
-            Text("How to Use Helping Hand")
+            Text("How to Use Tailwind")
                 .font(.title)
                 .fontWeight(.bold)
             Spacer()
@@ -52,7 +52,7 @@ struct HowToUseScreenView: View {
                 }
                 .padding()
             }
-            Text("Once a task is complete, go back to Helping Hand to check it off the list. After every task is checked off, the buttons for the timer will activate. Press Start and wait 30 minutes for the timer to go off. ")
+            Text("Once a task is complete, go back to Tailwind to check it off the list. After every task is checked off, the buttons for the timer will activate. Press Start and wait 30 minutes for the timer to go off. ")
                 .padding()
             if exampleTasks.allSatisfy({ $0.isCompleted }) {
                 Button("Start (Example Button)") {
@@ -74,7 +74,7 @@ struct HowToUseScreenView: View {
                     .padding()
             }
             
-            Text("Once the timer goes off a button will appear that will take you to the next round. The whole process will take around 2 hours if you just go by the guide. Read the Gritty Details section to see how it can be done quicker. Have fun spoiling your buddy!")
+            Text("Once the timer goes off a button will appear that will take you to the next round. The whole process will take a little more than 2 hours if you just go by the guide. Read the Gritty Details section to see how it can be done quicker. Have fun spoiling your buddy!")
                 .padding()
 
             Button("Got it!") {

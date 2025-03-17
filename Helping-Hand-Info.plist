@@ -7,5 +7,7 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>You should probably hit Allow, otherwise you won't get a notification when the timer is done. </string>
 </dict>
 </plist>
