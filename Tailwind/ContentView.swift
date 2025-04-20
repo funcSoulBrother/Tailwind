@@ -15,7 +15,6 @@ struct ContentView: View {
         @AppStorage("OnboardingScreenShows") private var willOnboardingScreenShow = true
         @AppStorage("CurrentRound") var currentRound = 1
     
-    
     var body: some View {
         TabView(selection: $savedSelectedTab) {
             HomeView()
@@ -36,7 +35,7 @@ struct ContentView: View {
         .accentColor(Color("ChuSecondary"))
         .sheet(isPresented: $willOnboardingScreenShow) {
             OnboardingScreen(willOnboardingScreenShow: $willOnboardingScreenShow)
-                .interactiveDismissDisabled()
+//                .interactiveDismissDisabled()
         }
     }
     func requestPermissions() {

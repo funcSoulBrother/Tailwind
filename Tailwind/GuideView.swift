@@ -21,8 +21,11 @@ struct GuideView: View {
     @State var showResetTimerAlert = false
     @State var startTime: Date?
     @State var helpScreenShowing = false
+    @State var timerFirstStarted = false
     @AppStorage("CurrentRound") var currentRound = 1
-    @AppStorage("TimerEndTime") var storedEndTime: Date?
+    @AppStorage("CurrentStep") var currentStep = 1
+    @CompatibleAppStorage("TimerEndTime") var storedEndTime: Date?
+    //Never used @CompatibleAppStorage before, but somehow lets Date work with older versions
     
     
     struct Task: Identifiable {
@@ -56,259 +59,369 @@ struct GuideView: View {
     
     var body: some View {
         NavigationStack{
-            VStack {
-                Text("Round \(currentRound)")
-                    .font(.largeTitle)
-                LazyVStack {
-                    if currentRound == 1 {
-                        ForEach($round1Tasks) { $task in
-                            HStack {
-                                Text(task.name)
-                                Spacer()
-                                Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                                    .foregroundColor(task.isCompleted ? Color("ChuPrimary") : .gray)
-                                    .imageScale(.large)
-                                    .scaleEffect(animateTask == task.id ? 1.2 : 1.0)
-                                    .animation(.spring(response: 0.3, dampingFraction: 0.5), value: animateTask)
-                                    .onTapGesture {
-                                        task.isCompleted.toggle()
-                                        if task.isCompleted {
-                                            animateTask = task.id
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                                animateTask = nil
+            ZStack {
+                Color("EasyBG")
+                    .ignoresSafeArea()
+                VStack {
+                    Text("Round \(currentRound)")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    if currentRound != 5 {
+                        Text("Step \(currentStep)")
+                            .font(.title)
+                    }
+                    if currentStep == 1 { // Beginning of Step 1 (Tasks)
+                        LazyVStack {
+                            if currentRound <= 4 {
+                                Text("Complete the following tasks with your buddy in Pokémon Go. After each task is completed and checked off, the button below will be enabled and you can move on to Step 2.")
+                                    .fontWeight(.semibold)
+                            }
+                            if currentRound == 1 {
+                                ForEach($round1Tasks) { $task in
+                                    HStack {
+                                        Text(task.name)
+                                        Spacer()
+                                        Image(systemName: task.isCompleted ? "checkmark.square.fill" : "square")
+                                            .foregroundColor(task.isCompleted ? Color("ChuTertiary") : .gray)
+                                            .imageScale(.large)
+                                            .scaleEffect(animateTask == task.id ? 1.2 : 1.0)
+                                            .animation(.spring(response: 0.3, dampingFraction: 0.5), value: animateTask)
+                                            .onTapGesture {
+                                                task.isCompleted.toggle()
+                                                if task.isCompleted {
+                                                    animateTask = task.id
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                                        animateTask = nil
+                                                    }
+                                                }
+                                            }
+                                    }
+                                    .padding(.vertical, 5)
+                                }
+                            }
+                            if currentRound == 2 || currentRound == 4 {
+                                ForEach($round2Or4Tasks) { $task in
+                                    HStack {
+                                        Text(task.name)
+                                        Spacer()
+                                        Image(systemName: task.isCompleted ? "checkmark.square.fill" : "square")
+                                            .foregroundColor(task.isCompleted ? Color("ChuTertiary") : .gray)
+                                            .imageScale(.large)
+                                            .scaleEffect(animateTask == task.id ? 1.2 : 1.0)
+                                            .animation(.spring(response: 0.3, dampingFraction: 0.5), value: animateTask)
+                                            .onTapGesture {
+                                                task.isCompleted.toggle()
+                                                if task.isCompleted {
+                                                    animateTask = task.id
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                                        animateTask = nil
+                                                    }
+                                                }
+                                            }
+                                    }
+                                    .padding(.vertical, 5)
+                                }
+                            }
+                            if currentRound == 3 {
+                                ForEach($round3Tasks) { $task in
+                                    HStack {
+                                        Text(task.name)
+                                        Spacer()
+                                        Image(systemName: task.isCompleted ? "checkmark.square.fill" : "square")
+                                            .foregroundColor(task.isCompleted ? Color("ChuTertiary") : .gray)
+                                            .imageScale(.large)
+                                            .scaleEffect(animateTask == task.id ? 1.2 : 1.0)
+                                            .animation(.spring(response: 0.3, dampingFraction: 0.5), value: animateTask)
+                                            .onTapGesture {
+                                                task.isCompleted.toggle()
+                                                if task.isCompleted {
+                                                    animateTask = task.id
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                                        animateTask = nil
+                                                    }
+                                                }
+                                            }
+                                    }
+                                    .padding(.vertical, 5)
+                                }
+                            }
+                            if currentRound == 5 {
+                                VStack {
+                                    Text("This is the end! Perform the following tasks until your buddy is excited: (you should only have to do one if you did everything correctly)")
+                                        .padding()
+                                    VStack (alignment: .leading) {
+                                        Text("• Feed your buddy a berry (two to earn another Heart)")
+                                        Text("• Play with your buddy")
+                                        Text("• Battle a team leader")
+                                        Text("• Take a snapshot")
+                                    }
+                                    Text("It's possible to make your buddy excited in Round 4; read how in the Mechanics section. Tap the \"Restart Process\" button to make another buddy excited!")
+                                        .padding()
+                                }
+                            }
+                        }
+                        .padding()
+                        
+                        //previous .toolbar location
+                        
+                        .sheet(isPresented: $helpScreenShowing) {
+                            HowToUseScreenView()
+                        }
+                        if round1Tasks.allSatisfy({ $0.isCompleted }) || round2Or4Tasks.allSatisfy({ $0.isCompleted}) || round3Tasks.allSatisfy({ $0.isCompleted}) {
+                            if #available (iOS 17.0, *) {
+                                Button("Go to Step 2") {
+                                    currentStep = 2
+                                }
+                                .fontWeight(.semibold)
+                                .padding(14)
+                                .background(isBlinking ? Color(Color("ChuSecondary")) : Color("ChuQuaternary"))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                                .onAppear {
+                                    startBlinking()
+                                }
+                            } else {
+                                Button("Go to Step 2") {
+                                    currentStep = 2
+                                    print("Step \(currentStep)")
+                                }
+                                .fontWeight(.semibold)
+                                .padding(14)
+                                .background(Color("ChuQuaternary"))
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                                .onAppear {
+                                    startBlinking()
+                                }
+                            }
+                        } else {
+                            if currentRound != 5 {
+                                Button("Go to Step 2") {
+                                    print("This button is disabled.")
+                                }
+                                .fontWeight(.semibold)
+                                .padding(14)
+                                .background(Color(UIColor.secondarySystemBackground))
+                                .foregroundColor(.secondary)
+                                .cornerRadius(10)
+                            }
+                        }
+                    } else { //Step 1 zone over, Step 2 zone begins
+                        VStack {
+                            Text("Wait 30 minutes for the cool-down period before you start Round \(currentRound + 1).")
+                                .fontWeight(.semibold)
+                                .padding()
+                            if currentRound <= 4 {
+                                Text(formatTime(timeRemaining))
+                                    .contentTransition(.numericText())
+                                    .animation(.linear, value: timeRemaining)
+                                    .font(.largeTitle)
+                                    .fontWeight(.semibold)
+                                    .padding()
+                                
+                                ZStack { //just to keep everything neatly in place
+                                    if timeRemaining != 0 {
+                                        HStack {
+                                            Spacer().frame(width: 80)
+                                            if timerActive == false {
+                                                VStack {
+                                                    Button(action: {
+                                                        startTimer()
+                                                    }) {
+                                                        Image(systemName: "play.circle.fill")
+                                                            .font(.system(size: 70))
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(Color("ChuSecondary"))
+                                                            .padding()
+                                                    }
+                                                    Button(action: {
+                                                        startTimer()
+                                                    }) {
+                                                        Text("Start Timer")
+                                                            .foregroundColor(Color("ChuSecondary"))
+                                                    }
+                                                }
+                                            } else {
+                                                VStack {
+                                                    Button(action: {
+                                                        pauseTimer()
+                                                    }) {
+                                                        Image(systemName: "pause.circle.fill")
+                                                            .foregroundColor(Color("ChuSecondary"))
+                                                            .font(.system(size: 70))
+                                                            .fontWeight(.bold)
+                                                            .padding()
+                                                    }
+                                                    Button(action: {
+                                                        pauseTimer()
+                                                    }) {
+                                                        Text("Pause Timer")
+                                                            .foregroundColor(Color("ChuSecondary"))
+                                                    }
+                                                }
+                                            }
+                                            VStack {
+                                                Button(action: {
+                                                    showResetTimerAlert = true
+                                                }) {
+                                                    Image(systemName: "arrow.counterclockwise.circle.fill")
+                                                        .font(.largeTitle)
+                                                        .fontWeight(.bold)
+                                                        .foregroundColor(Color("ChuTertiary"))
+                                                        .padding()
+                                                        .alert("Reset?", isPresented: $showResetTimerAlert) {
+                                                            Button("No", role: .cancel) {}
+                                                            Button("Yes I'm sure") {
+                                                                resetTimer()
+                                                            }
+                                                        } message: {
+                                                            Text("Are you sure you want to reset the timer back to 30 minutes?")
+                                                        }
+                                                }
+                                                Button(action: {
+                                                    resetTimer()
+                                                }) {
+                                                    Text("Reset Timer")
+                                                        .foregroundColor(Color("ChuTertiary"))
+                                                        .font(.system(size: 15))
+                                                }
                                             }
                                         }
                                     }
+                                    if timeRemaining == 0 {
+                                        if #available (iOS 17.0, *) {
+                                            Button("Start Round \(currentRound + 1)") {
+                                                currentRound += 1
+                                                currentStep = 1
+                                                timerFirstStarted = false
+                                                resetTimer()
+                                                resetTasks()
+                                            }
+                                            .fontWeight(.semibold)
+                                            .padding(14)
+                                            .background(isBlinking ? Color(Color("ChuSecondary")) : Color("ChuQuaternary"))
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
+                                            .onAppear {
+                                                startBlinking()
+                                            }
+                                        } else {
+                                            Button("Start Round \(currentRound + 1)") {
+                                                currentRound += 1
+                                                currentStep = 1
+                                                timerFirstStarted = false
+                                                resetTimer()
+                                                resetTasks()
+                                            }
+                                            .fontWeight(.semibold)
+                                            .padding(14)
+                                            .background(Color("ChuQuaternary"))
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
+                                            .onAppear {
+                                                startBlinking()
+                                            }
+                                        }
+                                    }
+                                }
+                                .frame(width: 300, height: 145)
                             }
-                            .padding(.vertical, 5)
+                        }
+                        .onAppear() {
+                            if currentStep != 1 {
+                                if !timerActive {
+                                    if !timerFirstStarted {
+                                        startTimer()
+                                        timerFirstStarted = true
+                                    }
+                                }
+                            }
+                        }
+                        .onChange(of: scenePhase) { phase in
+                            if phase == .inactive {
+                                print("Inactive")
+                            } else if phase == .active {
+                                print("Active")
+                                restoreTimer()
+                            } else if phase == .background {
+                                print("Background")
+                            }
                         }
                     }
-                    if currentRound == 2 || currentRound == 4 {
-                        ForEach($round2Or4Tasks) { $task in
-                            HStack {
-                                Text(task.name)
-                                Spacer()
-                                Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                                    .foregroundColor(task.isCompleted ? Color("ChuPrimary") : .gray)
-                                    .imageScale(.large)
-                                    .scaleEffect(animateTask == task.id ? 1.2 : 1.0)
-                                    .animation(.spring(response: 0.3, dampingFraction: 0.5), value: animateTask)
-                                    .onTapGesture {
-                                        task.isCompleted.toggle()
-                                        if task.isCompleted {
-                                            animateTask = task.id
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                                animateTask = nil
-                                            }
-                                        }
-                                    }
+                    
+                    if currentRound == 2 || currentRound == 3 || currentRound == 4 || currentStep == 2 {
+                        VStack(alignment: .leading) {
+                            Button("Restart Process") {
+                                showStartOverAlert = true
                             }
-                            .padding(.vertical, 5)
-                        }
-                    }
-                    if currentRound == 3 {
-                        ForEach($round3Tasks) { $task in
-                            HStack {
-                                Text(task.name)
-                                Spacer()
-                                Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                                    .foregroundColor(task.isCompleted ? Color("ChuPrimary") : .gray)
-                                    .imageScale(.large)
-                                    .scaleEffect(animateTask == task.id ? 1.2 : 1.0)
-                                    .animation(.spring(response: 0.3, dampingFraction: 0.5), value: animateTask)
-                                    .onTapGesture {
-                                        task.isCompleted.toggle()
-                                        if task.isCompleted {
-                                            animateTask = task.id
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                                animateTask = nil
-                                            }
-                                        }
-                                    }
+                            .padding()
+                            .foregroundColor(Color("ChuPrimary"))
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .alert("Start Over?", isPresented: $showStartOverAlert) {
+                                Button("No", role: .cancel) {}
+                                Button("Yes I'm sure") {
+                                    startOver()
+                                }
+                            } message: {
+                                Text("Are you sure you want to reset any progress and start over from Round 1 Step 1?")
                             }
-                            .padding(.vertical, 5)
                         }
                     }
                     if currentRound == 5 {
-                        VStack {
-                            Text("This is the end! Perform the following tasks until your buddy is excited: (you should only have to do one if you did everything correctly)")
-                                .padding()
-                            VStack (alignment: .leading) {
-                                Text("• Feed your buddy a berry (two to earn another Heart)")
-                                Text("• Play with your buddy")
-                                Text("• Battle a team leader")
-                                Text("• Take a snapshot")
-                            }
-                            Text("It's possible to make your buddy excited in Round 4; read how in the Gritty Details section. Click the Start from Round 1 button to make another buddy excited!")
-                                .padding()
-                            
-                        }
-                    }
-                }
-                .padding()
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            helpScreenShowing = true
-                        } label: {
-                            Image(systemName: "questionmark.circle")
-                                .imageScale(.large)
-                        }
-                    }
-                }
-                .sheet(isPresented: $helpScreenShowing) {
-                    HowToUseScreenView()
-                }
-                    VStack {
-                        if currentRound <= 4 {
-                        Text(formatTime(timeRemaining))
-                            .contentTransition(.numericText())
-                            .animation(.linear, value: timeRemaining)
-                            .font(.largeTitle)
-                            .padding()
-                        
-                        if timeRemaining != 0 {
-                            if round1Tasks.allSatisfy({ $0.isCompleted }) || round2Or4Tasks.allSatisfy({ $0.isCompleted}) || round3Tasks.allSatisfy({ $0.isCompleted}) {
-                                //ACTIVE BUTTONS (AFTER EVERYTHING IS COMPLETED)
-                                HStack {
-                                    Button(action: startTimer) {
-                                        Text("Start")
-                                            .padding()
-                                            .background(Color("ChuSecondary"))
-                                            .foregroundColor(.white)
-                                            .cornerRadius(10)
-                                    }
-                                    .disabled(timerActive)
-                                    
-                                    Button(action: pauseTimer) {
-                                        Text("Pause")
-                                            .padding()
-                                            .background(Color("ChuTertiary"))
-                                            .foregroundColor(colorScheme == .dark ? .black : .white)
-                                            .cornerRadius(10)
-                                    }
-                                    .disabled(!timerActive)
-                                    
-                                    Button("Reset") {
-                                        showResetTimerAlert = true
-                                    }
-                                    .padding()
-                                    .background(Color("ChuQuaternary"))
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
-                                    .alert("Reset?", isPresented: $showResetTimerAlert) {
-                                        Button("No", role: .cancel) {}
-                                        Button("Yes I'm sure") {
-                                            resetTimer()
-                                        }
-                                    } message: {
-                                        Text("Are you sure you want to reset the timer back to 30 minutes?")
-                                    }
-                                }
-                                
-                            }
-                            //INACTIVE BUTTONS
-                            else {
-                                HStack {
-                                    Button("Start") {
-                                        print("This Start button is currently disabled.")
-                                    }
-                                    .padding()
-                                    .background(Color(UIColor.secondarySystemBackground))
-                                    .foregroundColor(.secondary)
-                                    .cornerRadius(10)
-                                    
-                                    Button("Pause") {
-                                        print("This Pause button doesn't seem to do anything...")
-                                    }
-                                    .padding()
-                                    .background(Color(UIColor.secondarySystemBackground))
-                                    .foregroundColor(.secondary)
-                                    .cornerRadius(10)
-                                    
-                                    Button("Reset") {
-                                        print("This Reset button does nothing lol!")
-                                    }
-                                    .padding()
-                                    .background(Color(UIColor.secondarySystemBackground))
-                                    .foregroundColor(.secondary)
-                                    .cornerRadius(10)
-                                }
-                            }
-                        }
-                        if timeRemaining == 0 {
-                            Button("Start Round \(currentRound + 1)") {
-                                currentRound += 1
-                                print("Round \(currentRound)")
-                                resetTimer()
-                                resetTasks()
-                            }
-                            .fontWeight(.semibold)
-                            .padding(14)
-                            .background(isBlinking ? Color(Color("ChuSecondary")) : Color("ChuQuaternary"))
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .onAppear {
-                                startBlinking()
-                            }
-                        }
-                    }
-                    if currentRound == 1 {
-                        Button("Start from Round 1") {
-                            showRound1Alert = true
-                        }
-                        .padding()
-                        .background(Color("ChuPrimary"))
-                        .foregroundColor(.black)
-                        .cornerRadius(10)
-                        .alert("Uh, it's already Round 1.", isPresented: $showRound1Alert) {
-                            Button("Oh, I knew that...", role: .cancel) {}
-                        }
-                    } else if currentRound == 2 || currentRound == 3 || currentRound == 4 {
-                        Button("Start from Round 1") {
-                            showStartOverAlert = true
-                        }
-                        .padding()
-                        .background(Color("ChuPrimary"))
-                        .foregroundColor(.black)
-                        .cornerRadius(10)
-                        .alert("Start Over?", isPresented: $showStartOverAlert) {
-                            Button("No", role: .cancel) {}
-                            Button("Yes I'm sure") {
-                                startOver()
-                            }
-                        } message: {
-                            Text("Are you sure you want to reset any progress and start from Round 1?")
-                        }
-                    } else {
-                        Button("Start from Round 1") {
+                        Button("Restart Process") {
                             startOver()
                         }
-                        .padding()
+                        .padding(14)
                         .background(Color("ChuPrimary"))
                         .foregroundColor(.black)
+                        .fontWeight(.bold)
                         .cornerRadius(10)
                     }
                     
                     StartAppBanner()
                         .frame(height: 50)
                         .background(Color(UIColor.secondarySystemBackground))
+                    //                if #available(iOS 17.0, *) {
+                    //                    .onChange(of: scenePhase) { oldPhase, newPhase in
+                    //                        if newPhase == .inactive {
+                    //                            print("Inactive")
+                    //                        } else if newPhase == .active {
+                    //                            print("Active")
+                    //                            restoreTimer()
+                    //                        } else if newPhase == .background {
+                    //                            print("Background")
+                    //                        }
+                    //                    }
+                    //                } else {
                     
+                    //                }
+                    //                .onChange(of: scenePhase) { oldPhase, newPhase in
+                    //                    if newPhase == .inactive {
+                    //                        print("Inactive")
+                    //                    } else if newPhase == .active {
+                    //                        print("Active")
+                    //                        restoreTimer()
+                    //                    } else if newPhase == .background {
+                    //                        print("Background")
+                    //                    }
+                    //                }
+                    //                .padding()
                 }
-                .onChange(of: scenePhase) { oldPhase, newPhase in
-                    if newPhase == .inactive {
-                        print("Inactive")
-                    } else if newPhase == .active {
-                        print("Active")
-                        restoreTimer()
-                    } else if newPhase == .background {
-                        print("Background")
-                    }
-                }
-                .padding()
             }
+//            .toolbar {
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    Button {
+//                        helpScreenShowing = true
+//                    } label: {
+//                        Image(systemName: "questionmark.circle")
+//                            .imageScale(.large)
+//                    }
+//                }
+//            }
         }
     }
+    
     
     func startTimer() {
         timerActive = true
@@ -318,7 +431,7 @@ struct GuideView: View {
         if timeRemaining > 0 {
             let content = UNMutableNotificationContent()
             content.title = "Time is Up!"
-            content.body = "Round \(currentRound) is done, return to Helping Hand to move on to Round \(currentRound + 1)!"
+            content.body = "Round \(currentRound) is done, return to Tailwind to move on to Round \(currentRound + 1)!"
             content.sound = UNNotificationSound.default
             
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeRemaining), repeats: false)
@@ -357,6 +470,8 @@ struct GuideView: View {
     
     func startOver() {
         currentRound = 1
+        currentStep = 1
+        timerFirstStarted = false
         resetTimer()
         resetTasks()
     }
@@ -424,6 +539,31 @@ struct StartAppBanner: UIViewRepresentable {
         func failedLoadBannerAd(_ banner: STABannerView, withError error: Error) {
             print("Failed to load banner ad: \(error.localizedDescription)")
         }
+    }
+}
+
+//Claude-generated property wrapper to let storedEndTime be compatible with iOS versions earlier than 18.0
+@propertyWrapper
+struct CompatibleAppStorage<Value> {
+    private let key: String
+    private let defaultValue: Value?
+    
+    var wrappedValue: Value? {
+        get {
+            UserDefaults.standard.object(forKey: key) as? Value
+        }
+        nonmutating set {
+            if let newValue = newValue {
+                UserDefaults.standard.set(newValue, forKey: key)
+            } else {
+                UserDefaults.standard.removeObject(forKey: key)
+            }
+        }
+    }
+    
+    init(_ key: String, defaultValue: Value? = nil) {
+        self.key = key
+        self.defaultValue = defaultValue
     }
 }
 

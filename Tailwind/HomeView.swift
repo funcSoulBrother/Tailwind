@@ -14,48 +14,87 @@ struct HomeView: View {
     
     var body: some View {
         
-        VStack (spacing: 50) {
-            Rectangle()
-                .fill(Color("ChuQuaternary"))
-                .frame(width: 320, height: 200)
-            Text("Your personal Pokémon Go excited guide!")
-                .padding(.horizontal, 14)
-            
-            HomeButton(title: "The Guide") {
-                savedSelectedTab = 1
+        ZStack {
+            Color("EasyBG")
+                .ignoresSafeArea()
+            VStack (spacing: 50) {
+                Rectangle()
+                    .fill(Color("ChuPrimary"))
+                    .frame(width: 320, height: 200)
+                Text("Excite your buddy in Pokémon Go without poffins!")
+                //                .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 14)
+                
+                
+                // How to implement HomeButton for future reference
+                //            HomeButton(title: "The Guide") {
+                //                savedSelectedTab = 1
+                //            }
+                
+                HStack {
+                    Button(action: {
+                        gettingStartedScreenShowing = true
+                    }) {
+                        Text("How to Use")
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("ChuSecondary"))
+                            .padding()
+                    }
+                    
+                    Divider()
+                        .frame(height: 40)
+                        .background(.secondary)
+                    
+                    Button(action: {
+                        boringDetailsScreenShowing = true
+                    }) {
+                        Text("Mechanics")
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("ChuSecondary"))
+                            .padding()
+                    }
+                }
+                
+                Button(action: {
+                    savedSelectedTab = 1
+                }) {
+                    Text("The Guide")
+                        .frame(width: 275)
+                        .fontWeight(.bold)
+                        .padding()
+                        .background(Color("ChuSecondary"))
+                        .foregroundColor(Color("EasyBG"))
+                        .cornerRadius(10)
+                }
+                
             }
-            
-            HomeButton(title: "How to Use") {
-                gettingStartedScreenShowing = true
+            .sheet(isPresented: $gettingStartedScreenShowing) {
+                HowToUseScreenView()
             }
-            
-            HomeButton(title: "Gritty Details/Tips & Tricks") {
-                boringDetailsScreenShowing = true
+            .sheet(isPresented: $boringDetailsScreenShowing) {
+                GrittyDetailsScreenView()
             }
-            
-        }
-        .sheet(isPresented: $gettingStartedScreenShowing) {
-            HowToUseScreenView()
-        }
-        .sheet(isPresented: $boringDetailsScreenShowing) {
-            GrittyDetailsScreenView()
         }
     }
 }
 
-struct HomeButton: View {
-    let title: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button(title, action: action)
-            .frame(width: 275)
-            .padding()
-            .background(Color("ChuPrimary"))
-            .foregroundColor(.black)
-            .cornerRadius(10)
-    }
-}
+// HomeButton struct no longer in use but saved for future reference
+//struct HomeButton: View {
+//    let title: String
+//    let action: () -> Void
+//    
+//    var body: some View {
+//        Button(action: action) {
+//            Text(title)
+//                .frame(width: 275)
+//                .padding()
+//                .background(Color("ChuPrimary"))
+//                .foregroundColor(.black)
+//                .cornerRadius(10)
+//        }
+//    }
+//}
 
 
 #Preview {
