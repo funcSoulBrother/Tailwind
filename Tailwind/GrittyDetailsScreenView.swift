@@ -16,9 +16,10 @@ struct GrittyDetailsScreenView: View {
                 .ignoresSafeArea()
             ScrollView {
                 VStack {
-                    Text("All the Gritty Details")
+                    Text("Excited Mechanics")
                         .font(.largeTitle)
                         .fontWeight(.bold)
+                        .padding(.top, 40)
                     Text("Each time you interact with your buddy in Pokémon Go it becomes happier and happier. If you interact with your buddy enough it’ll be in an excited state. But the methods for making your buddy excited is not explicitly stated in game and the mechanics are somewhat confusing. This excited state can also be reached by giving your buddy a Poffin, but what if you’re all out of Poffins and you don’t want to shell out the cash to buy more? This guide is intended to be your one stop guide for the most efficient way to make your buddy excited in Pokémon Go without a Poffin.")
                         .padding(30)
                     Text("But why should I care about making my buddy excited?")

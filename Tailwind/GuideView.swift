@@ -25,8 +25,6 @@ struct GuideView: View {
     @AppStorage("CurrentRound") var currentRound = 1
     @AppStorage("CurrentStep") var currentStep = 1
     @CompatibleAppStorage("TimerEndTime") var storedEndTime: Date?
-    //Never used @CompatibleAppStorage before, but somehow lets Date work with older versions
-    
     
     struct Task: Identifiable {
         let id = UUID()
@@ -73,7 +71,7 @@ struct GuideView: View {
                     if currentStep == 1 { // Beginning of Step 1 (Tasks)
                         LazyVStack {
                             if currentRound <= 4 {
-                                Text("Complete the following tasks with your buddy in Pokémon Go. After each task is completed and checked off, the button below will be enabled and you can move on to Step 2.")
+                                Text("Complete the following tasks with your buddy in Pokémon Go. After each task is completed and checked off, the Step 2 button will be enabled.")
                                     .fontWeight(.semibold)
                             }
                             if currentRound == 1 {
@@ -97,6 +95,7 @@ struct GuideView: View {
                                             }
                                     }
                                     .padding(.vertical, 5)
+                                    .padding(.trailing, 20)
                                 }
                             }
                             if currentRound == 2 || currentRound == 4 {
@@ -120,6 +119,7 @@ struct GuideView: View {
                                             }
                                     }
                                     .padding(.vertical, 5)
+                                    .padding(.trailing, 20)
                                 }
                             }
                             if currentRound == 3 {
@@ -143,6 +143,7 @@ struct GuideView: View {
                                             }
                                     }
                                     .padding(.vertical, 5)
+                                    .padding(.trailing, 20)
                                 }
                             }
                             if currentRound == 5 {

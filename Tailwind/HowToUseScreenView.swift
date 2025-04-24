@@ -31,6 +31,7 @@ struct HowToUseScreenView: View {
                 Text("How to Use Tailwind")
                     .font(.title)
                     .fontWeight(.bold)
+                    .padding(.top, 40)
                 Spacer()
                 Text("Exciting your buddy in Pokémon Go entails 5 rounds each consisting of 2 steps (except the final round which only consists of 1 step).")
                     .padding(.top, 20)

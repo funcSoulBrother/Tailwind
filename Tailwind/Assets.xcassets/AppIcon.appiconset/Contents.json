@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "AppleThunderPlaceholderIcon.jpg",
+      "filename" : "TailWind-logo2-white-10black.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,6 +13,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "TailWind-logo2-darkmode.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

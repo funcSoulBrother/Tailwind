@@ -18,11 +18,10 @@ struct HomeView: View {
             Color("EasyBG")
                 .ignoresSafeArea()
             VStack (spacing: 50) {
-                Rectangle()
-                    .fill(Color("ChuPrimary"))
-                    .frame(width: 320, height: 200)
+                Image("tailwindLogoDark")
+                    .resizable()
+                    .scaledToFit()
                 Text("Excite your buddy in Pokémon Go without poffins!")
-                //                .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 14)
                 
