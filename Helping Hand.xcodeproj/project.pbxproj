@@ -150,9 +150,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Helping Hand/Pods-Helping Hand-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Helping Hand/Pods-Helping Hand-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -328,8 +332,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Helping-Hand-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Tailwind;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This data will be used to deliver personalized ads to you. Seriously, I'm a Pokémon Go nerd. Even if I could look at your phone's activity I'm way too busy trying to get a shiny Sandyghast.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This data will be used to deliver personalized ads to you. Seriously, I'm a Pokémon Go nerd. Even if I could look at your phone's activity I'm too busy trying to get shinies.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -363,8 +368,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Helping-Hand-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Tailwind;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This data will be used to deliver personalized ads to you. Seriously, I'm a Pokémon Go nerd. Even if I could look at your phone's activity I'm way too busy trying to get a shiny Sandyghast.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This data will be used to deliver personalized ads to you. Seriously, I'm a Pokémon Go nerd. Even if I could look at your phone's activity I'm too busy trying to get shinies.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

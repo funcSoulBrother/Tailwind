@@ -7,13 +7,14 @@
 import UserNotifications
 import SwiftUI
 import StartApp
+import StepperView
 
 struct GuideView: View {
     
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.colorScheme) var colorScheme
     @State var isBlinking = false
-    @State var timeRemaining = 30 // (1_800 for 30 minutes)
+    @State var timeRemaining = 1_800 // (1_800 for 30 minutes)
     @State var timerActive = false
     @State var timer: Timer?
     @State var showRound1Alert = false
@@ -35,25 +36,57 @@ struct GuideView: View {
     @State var round1Tasks = [
         Task(name: "Feed your buddy a berry (three if you want to gain more Hearts)", isCompleted: false),
         Task(name: "Play with your buddy", isCompleted: false),
-        Task(name: "Battle a team leader", isCompleted: false),
-        Task(name: "Take a snapshot", isCompleted: false)
+        Task(name: "Take a snapshot", isCompleted: false),
+        Task(name: "Battle a team leader", isCompleted: false)
     ]
     
     @State var round2Or4Tasks = [
         Task(name: "Feed your buddy one berry", isCompleted: false),
         Task(name: "Play with your buddy", isCompleted: false),
-        Task(name: "Battle a team leader", isCompleted: false),
-        Task(name: "Take a snapshot", isCompleted: false)
+        Task(name: "Take a snapshot", isCompleted: false),
+        Task(name: "Battle a team leader", isCompleted: false)
     ]
     
     @State var round3Tasks = [
         Task(name: "Feed your buddy one berry (two if you fed your buddy three berries in Round 1 and you want another Heart)", isCompleted: false),
         Task(name: "Play with your buddy", isCompleted: false),
-        Task(name: "Battle a team leader", isCompleted: false),
-        Task(name: "Take a snapshot", isCompleted: false)
+        Task(name: "Take a snapshot", isCompleted: false),
+        Task(name: "Battle a team leader", isCompleted: false)
     ]
     
     @State private var animateTask: UUID? = nil
+    @State private var currentStepperStep = 0
+    let stepCount = 5
+    
+    //next two functions for stepper
+    private func indicator(for index: Int) -> some View {
+        ZStack {
+            if index < currentStepperStep {
+                // Completed step
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+                    .font(.system(size: 30))
+            } else if index == currentStepperStep {
+                // Current step
+                Image(systemName: "\(index + 1).circle.fill")
+                    .foregroundColor(Color("ChuSecondary"))
+                    .font(.system(size: 30))
+            } else {
+                // Future step
+                Image(systemName: "\(index + 1).circle")
+                    .foregroundColor(Color("ChuTertiary"))
+                    .font(.system(size: 30))
+            }
+        }
+        .frame(width: 30, height: 30)
+    }
+    
+    // Line view between indicators
+    private func lineView(_ isCompleted: Bool) -> some View {
+        Rectangle()
+            .fill(isCompleted ? Color.green : Color("ChuTertiary"))
+            .frame(width: 40, height: 2)
+    }
     
     var body: some View {
         NavigationStack{
@@ -65,13 +98,23 @@ struct GuideView: View {
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     if currentRound != 5 {
-                        Text("Step \(currentStep)")
-                            .font(.title)
+                        //Begin Stepper Code
+                        HStack(spacing: 0) {
+                            ForEach(0..<stepCount, id: \.self) { index in
+
+                                indicator(for: index)
+                                
+                                if index < stepCount - 1 {
+                                    lineView(index < currentStepperStep)
+                                }
+                            }
+                        }
+                        //End Stepper Code
                     }
                     if currentStep == 1 { // Beginning of Step 1 (Tasks)
                         LazyVStack {
                             if currentRound <= 4 {
-                                Text("Complete the following tasks with your buddy in Pokémon Go. After each task is completed and checked off, the Step 2 button will be enabled.")
+                                Text("Complete the following tasks with your buddy in Pokémon Go. After each task is completed and checked off, the Cool-down button will be enabled.")
                                     .fontWeight(.semibold)
                             }
                             if currentRound == 1 {
@@ -163,14 +206,9 @@ struct GuideView: View {
                         }
                         .padding()
                         
-                        //previous .toolbar location
-                        
-                        .sheet(isPresented: $helpScreenShowing) {
-                            HowToUseScreenView()
-                        }
                         if round1Tasks.allSatisfy({ $0.isCompleted }) || round2Or4Tasks.allSatisfy({ $0.isCompleted}) || round3Tasks.allSatisfy({ $0.isCompleted}) {
                             if #available (iOS 17.0, *) {
-                                Button("Go to Step 2") {
+                                Button("Start Cool-down Timer") {
                                     currentStep = 2
                                 }
                                 .fontWeight(.semibold)
@@ -182,7 +220,7 @@ struct GuideView: View {
                                     startBlinking()
                                 }
                             } else {
-                                Button("Go to Step 2") {
+                                Button("Start Cool-down Timer") {
                                     currentStep = 2
                                     print("Step \(currentStep)")
                                 }
@@ -197,7 +235,7 @@ struct GuideView: View {
                             }
                         } else {
                             if currentRound != 5 {
-                                Button("Go to Step 2") {
+                                Button("Start Cool-down Timer") {
                                     print("This button is disabled.")
                                 }
                                 .fontWeight(.semibold)
@@ -207,7 +245,7 @@ struct GuideView: View {
                                 .cornerRadius(10)
                             }
                         }
-                    } else { //Step 1 zone over, Step 2 zone begins
+                    } else { //Step 1 zone over, Step 2 zone begins (Cool-down)
                         VStack {
                             Text("Wait 30 minutes for the cool-down period before you start Round \(currentRound + 1).")
                                 .fontWeight(.semibold)
@@ -220,7 +258,7 @@ struct GuideView: View {
                                     .fontWeight(.semibold)
                                     .padding()
                                 
-                                ZStack { //just to keep everything neatly in place
+                                ZStack { //just to keep everything neatly in place when next round button appears
                                     if timeRemaining != 0 {
                                         HStack {
                                             Spacer().frame(width: 80)
@@ -294,6 +332,7 @@ struct GuideView: View {
                                             Button("Start Round \(currentRound + 1)") {
                                                 currentRound += 1
                                                 currentStep = 1
+                                                currentStepperStep += 1
                                                 timerFirstStarted = false
                                                 resetTimer()
                                                 resetTasks()
@@ -310,6 +349,7 @@ struct GuideView: View {
                                             Button("Start Round \(currentRound + 1)") {
                                                 currentRound += 1
                                                 currentStep = 1
+                                                currentStepperStep += 1
                                                 timerFirstStarted = false
                                                 resetTimer()
                                                 resetTasks()
@@ -383,43 +423,9 @@ struct GuideView: View {
                     StartAppBanner()
                         .frame(height: 50)
                         .background(Color(UIColor.secondarySystemBackground))
-                    //                if #available(iOS 17.0, *) {
-                    //                    .onChange(of: scenePhase) { oldPhase, newPhase in
-                    //                        if newPhase == .inactive {
-                    //                            print("Inactive")
-                    //                        } else if newPhase == .active {
-                    //                            print("Active")
-                    //                            restoreTimer()
-                    //                        } else if newPhase == .background {
-                    //                            print("Background")
-                    //                        }
-                    //                    }
-                    //                } else {
                     
-                    //                }
-                    //                .onChange(of: scenePhase) { oldPhase, newPhase in
-                    //                    if newPhase == .inactive {
-                    //                        print("Inactive")
-                    //                    } else if newPhase == .active {
-                    //                        print("Active")
-                    //                        restoreTimer()
-                    //                    } else if newPhase == .background {
-                    //                        print("Background")
-                    //                    }
-                    //                }
-                    //                .padding()
                 }
             }
-//            .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    Button {
-//                        helpScreenShowing = true
-//                    } label: {
-//                        Image(systemName: "questionmark.circle")
-//                            .imageScale(.large)
-//                    }
-//                }
-//            }
         }
     }
     
@@ -460,7 +466,7 @@ struct GuideView: View {
     
     func resetTimer() {
         pauseTimer()
-        timeRemaining = 30
+        timeRemaining = 1_800
     }
     
     func formatTime(_ seconds: Int) -> String {
@@ -472,6 +478,7 @@ struct GuideView: View {
     func startOver() {
         currentRound = 1
         currentStep = 1
+        currentStepperStep = 0
         timerFirstStarted = false
         resetTimer()
         resetTasks()
@@ -506,6 +513,8 @@ struct GuideView: View {
         }
     }
 }
+
+
 
 struct StartAppBanner: UIViewRepresentable {
     func makeUIView(context: Context) -> STABannerView {

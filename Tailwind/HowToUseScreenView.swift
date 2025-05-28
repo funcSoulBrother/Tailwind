@@ -17,7 +17,7 @@ struct HowToUseScreenView: View {
     }
     
     @State var exampleTasks = [
-        Task(name: "Play with your buddy (example task)", isCompleted: false)
+        Task(name: "Play with your buddy (example)", isCompleted: false)
     ]
     
     @State private var animateTask: UUID? = nil
@@ -33,10 +33,10 @@ struct HowToUseScreenView: View {
                     .fontWeight(.bold)
                     .padding(.top, 40)
                 Spacer()
-                Text("Exciting your buddy in Pokémon Go entails 5 rounds each consisting of 2 steps (except the final round which only consists of 1 step).")
+                Text("Exciting your buddy in Pokémon Go consists of 5 rounds.")
                     .padding(.top, 20)
-                    .padding(.horizontal, 20)
-                Text("Step 1 consists of tasks you need to complete with your buddy in Pokémon Go. The tasks are listed at the top of the screen. They look like this:")
+                    .padding(.horizontal, 19)
+                Text("First you need to complete a set of tasks with your buddy. The tasks are listed at the top of the screen. They look like this:")
                     .padding(20)
                 ForEach($exampleTasks) { $task in
                     HStack {
@@ -58,11 +58,12 @@ struct HowToUseScreenView: View {
                             }
                     }
                     .padding()
+                    .padding(.trailing, 20)
                 }
-                Text("Once a task is completed in Pokémon Go, return to Tailwind and check it off the list by tapping the box next to it. After every task is checked off, the button that will take you to Step 2 will activate. Tap it as soon as you can.")
+                Text("Once a task is completed in Pokémon Go, return to Tailwind and check it off the list by tapping the box next to it. After every task is checked off, the button that will start the cool-down timer will activate. Tap it as soon as you can.")
                     .padding(20)
                 if exampleTasks.allSatisfy({ $0.isCompleted }) {
-                    Button("Go to Step 2 (Example Button)") {
+                    Button("Start Cool-down (Example)") {
                         print("This is an example button. Yay!!!!")
                     }
                     .padding()
@@ -71,7 +72,7 @@ struct HowToUseScreenView: View {
                     .cornerRadius(10)
                     .padding()
                 } else {
-                    Button("Go to Step 2 (Example Button)") {
+                    Button("Start Cool-down (Example)") {
                         print("This is an example button. Wonderful.")
                     }
                     .padding()
@@ -81,7 +82,7 @@ struct HowToUseScreenView: View {
                     .padding()
                 }
                 
-                Text("Step 2 is a 30-minute cool-down period. You have to wait this amount of time or else the next round's tasks won't count. The timer will automatically start at the beginning of Step 2. Once the timer goes off a button will appear that will take you to the next round.")
+                Text("Tapping the button will start the 30-minute cool-down timer. You have to wait this amount of time or else the next round's tasks won't count. Once the timer goes off a button will appear that will take you to the next round.")
                     .padding(20)
                 Text("The whole process will take a little more than 2 hours if you just go by this guide. Read the \"Mechanics\" section to see how it can be done in 1.5 hours. Have fun spoiling your buddy!")
                     .padding(.horizontal, 20)

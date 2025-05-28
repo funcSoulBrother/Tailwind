@@ -18,7 +18,7 @@ struct HomeView: View {
             Color("EasyBG")
                 .ignoresSafeArea()
             VStack (spacing: 50) {
-                Image("tailwindLogoDark")
+                Image("tailwindLogo")
                     .resizable()
                     .scaledToFit()
                 Text("Excite your buddy in Pokémon Go without poffins!")

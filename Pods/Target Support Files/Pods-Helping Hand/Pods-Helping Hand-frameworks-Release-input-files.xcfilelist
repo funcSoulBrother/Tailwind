@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-Helping Hand/Pods-Helping Hand-frameworks.sh
+${BUILT_PRODUCTS_DIR}/StepperView/StepperView.framework
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/StartAppSDK/StartApp.framework/StartApp

@@ -11,5 +11,6 @@ target 'Helping Hand' do
 
   # Pods for Helping Hand
   pod 'StartAppSDK'
+  pod 'StepperView'
 
 end
