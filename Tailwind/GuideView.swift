@@ -405,7 +405,7 @@ struct GuideView: View {
                                     startOver()
                                 }
                             } message: {
-                                Text("Are you sure you want to reset any progress and start over from Round 1 Step 1?")
+                                Text("Are you sure you want to reset any progress and start over from the beginning of Round 1?")
                             }
                         }
                     }
