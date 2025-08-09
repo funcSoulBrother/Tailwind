@@ -518,6 +518,7 @@ struct GuideView: View {
 
 struct StartAppBanner: UIViewRepresentable {
     func makeUIView(context: Context) -> STABannerView {
+        print("🔧 StartAppBanner: makeUIView called")
         // Create a default UIView to return if banner creation fails
         let defaultView = STABannerView()
         
@@ -525,10 +526,11 @@ struct StartAppBanner: UIViewRepresentable {
         if let banner = STABannerView(size: STA_AutoAdSize,
                                     origin: CGPoint(x: 0, y: 0),
                                     withDelegate: context.coordinator) {
+            print("✅ StartAppBanner: Banner created successfully, calling loadAd()")
             banner.loadAd()
             return banner
         } else {
-            print("Failed to create STABannerView")
+            print("❌ StartAppBanner: Failed to create STABannerView")
             return defaultView
         }
     }
@@ -543,11 +545,11 @@ struct StartAppBanner: UIViewRepresentable {
     
     class Coordinator: NSObject, STABannerDelegateProtocol {
         func didDisplayBannerAd(_ banner: STABannerView) {
-            print("Banner ad displayed")
+            print("✅ StartAppBanner: Banner ad displayed")
         }
         
         func failedLoadBannerAd(_ banner: STABannerView, withError error: Error) {
-            print("Failed to load banner ad: \(error.localizedDescription)")
+            print("❌ StartAppBanner: Banner ad failed: \(error.localizedDescription)")
         }
     }
 }
