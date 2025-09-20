@@ -14,6 +14,26 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright 2025 Google LLC</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>Google-Mobile-Ads-SDK</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright 2025 Google LLC</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>GoogleUserMessagingPlatform</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>STARTAPP MOBILE APPLICATION SDK LICENSE AGREEMENT
 
 PLEASE READ THIS CAREFULLY.  IF YOU DO NOT AGREE TO THESE TERMS, YOU ARE NOT AUTHORIZED TO DOWNLOAD OR USE THIS SDK.

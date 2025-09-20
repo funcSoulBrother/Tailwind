@@ -9,6 +9,8 @@ import SwiftUI
 
 struct GrittyDetailsScreenView: View {
     @Environment(\.dismiss) var dismiss
+    private let mechanics1AdUnitID = "ca-app-pub-1269877083649460/7532138839"
+    private let mechanics2AdUnitID = "ca-app-pub-1269877083649460/7093155134"
     
     var body: some View {
         ZStack {
@@ -60,6 +62,10 @@ struct GrittyDetailsScreenView: View {
                     .fontWeight(.light)
                     Text("Probably the easiest of these to do is battling a Team GO Rocket member. Try to time the process so that a Rocket balloon shows up at some point during the process and you’re good to go.")
                         .padding(30)
+                    AdBannerView(adUnitID: mechanics1AdUnitID)
+                                .frame(height: 50)
+                                .background(Color(UIColor.secondarySystemBackground))
+                                .padding(.bottom, 20)
                     Text("Tips & Tricks")
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -121,6 +127,10 @@ struct GrittyDetailsScreenView: View {
                             .foregroundColor(.white)
                             .cornerRadius(10)
                     }
+                    AdBannerView(adUnitID: mechanics2AdUnitID)
+                                .frame(height: 50)
+                                .background(Color(UIColor.secondarySystemBackground))
+                                .padding(.top, 10)
                     Text("* Please note that I’ve tested all of these mechanics myself and I can attest that they’re all accurate at the time of writing. However, any of these rules can be changed by Niantic at any time whether it be on purpose or unintended glitch. I strive for this to be the definitive Pokémon Go excited guide, so if you notice any discrepancies between this guide and the in-game mechanics, please don’t hesitate to email me at cresylvioletapps@icloud.com")
                         .padding(30)
                 }

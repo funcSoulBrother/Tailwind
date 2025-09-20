@@ -26,6 +26,10 @@ struct GuideView: View {
     @AppStorage("CurrentRound") var currentRound = 1
     @AppStorage("CurrentStep") var currentStep = 1
     @CompatibleAppStorage("TimerEndTime") var storedEndTime: Date?
+    // Test ad unit ID - use this for testing
+    private let testAdUnitID = "ca-app-pub-3940256099942544/2934735716"
+    // Your real ad unit ID from AdMob console
+    private let guideAdUnitID = "ca-app-pub-1269877083649460/4228051161"
     
     struct Task: Identifiable {
         let id = UUID()
@@ -420,9 +424,13 @@ struct GuideView: View {
                         .cornerRadius(10)
                     }
                     
-                    StartAppBanner()
-                        .frame(height: 50)
-                        .background(Color(UIColor.secondarySystemBackground))
+                        AdBannerView(adUnitID: guideAdUnitID)
+                                    .frame(height: 50)
+                                    .background(Color(UIColor.secondarySystemBackground))
+                    ///old Start.io code
+//                    StartAppBanner()
+//                        .frame(height: 50)
+//                        .background(Color(UIColor.secondarySystemBackground))
                     
                 }
             }
@@ -515,44 +523,44 @@ struct GuideView: View {
 }
 
 
-
-struct StartAppBanner: UIViewRepresentable {
-    func makeUIView(context: Context) -> STABannerView {
-        print("🔧 StartAppBanner: makeUIView called")
-        // Create a default UIView to return if banner creation fails
-        let defaultView = STABannerView()
-        
-        // Try to create the banner with safe unwrapping
-        if let banner = STABannerView(size: STA_AutoAdSize,
-                                    origin: CGPoint(x: 0, y: 0),
-                                    withDelegate: context.coordinator) {
-            print("✅ StartAppBanner: Banner created successfully, calling loadAd()")
-            banner.loadAd()
-            return banner
-        } else {
-            print("❌ StartAppBanner: Failed to create STABannerView")
-            return defaultView
-        }
-    }
-    
-    func updateUIView(_ uiView: STABannerView, context: Context) {
-        // Updates if needed
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-    
-    class Coordinator: NSObject, STABannerDelegateProtocol {
-        func didDisplayBannerAd(_ banner: STABannerView) {
-            print("✅ StartAppBanner: Banner ad displayed")
-        }
-        
-        func failedLoadBannerAd(_ banner: STABannerView, withError error: Error) {
-            print("❌ StartAppBanner: Banner ad failed: \(error.localizedDescription)")
-        }
-    }
-}
+///old Start.io code
+//struct StartAppBanner: UIViewRepresentable {
+//    func makeUIView(context: Context) -> STABannerView {
+//        print("🔧 StartAppBanner: makeUIView called")
+//        // Create a default UIView to return if banner creation fails
+//        let defaultView = STABannerView()
+//        
+//        // Try to create the banner with safe unwrapping
+//        if let banner = STABannerView(size: STA_AutoAdSize,
+//                                    origin: CGPoint(x: 0, y: 0),
+//                                    withDelegate: context.coordinator) {
+//            print("✅ StartAppBanner: Banner created successfully, calling loadAd()")
+//            banner.loadAd()
+//            return banner
+//        } else {
+//            print("❌ StartAppBanner: Failed to create STABannerView")
+//            return defaultView
+//        }
+//    }
+//    
+//    func updateUIView(_ uiView: STABannerView, context: Context) {
+//        // Updates if needed
+//    }
+//    
+//    func makeCoordinator() -> Coordinator {
+//        Coordinator()
+//    }
+//    
+//    class Coordinator: NSObject, STABannerDelegateProtocol {
+//        func didDisplayBannerAd(_ banner: STABannerView) {
+//            print("✅ StartAppBanner: Banner ad displayed")
+//        }
+//        
+//        func failedLoadBannerAd(_ banner: STABannerView, withError error: Error) {
+//            print("❌ StartAppBanner: Banner ad failed: \(error.localizedDescription)")
+//        }
+//    }
+//}
 
 //Claude-generated property wrapper to let storedEndTime be compatible with iOS versions earlier than 18.0
 @propertyWrapper

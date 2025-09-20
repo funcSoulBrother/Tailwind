@@ -1,20 +1,28 @@
 PODS:
-  - StartAppSDK (4.10.5)
+  - Google-Mobile-Ads-SDK (12.10.0):
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleUserMessagingPlatform (3.0.0)
+  - StartAppSDK (4.11.0)
   - StepperView (1.6.7)
 
 DEPENDENCIES:
+  - Google-Mobile-Ads-SDK
   - StartAppSDK
   - StepperView
 
 SPEC REPOS:
   trunk:
+    - Google-Mobile-Ads-SDK
+    - GoogleUserMessagingPlatform
     - StartAppSDK
     - StepperView
 
 SPEC CHECKSUMS:
-  StartAppSDK: fdb283998a38ccf580d42336db0b97c403bb86f0
+  Google-Mobile-Ads-SDK: 08194bf203dc13f4422de827a4b254f27cd4a3a5
+  GoogleUserMessagingPlatform: f8d0cdad3ca835406755d0a69aa634f00e76d576
+  StartAppSDK: 8da2f1ff9b74f37b11972de191266d40582e5fbf
   StepperView: 9b88922ef65712410c0e95c460cd115d33cfd933
 
-PODFILE CHECKSUM: 96d64df47372ccf3992d6e9ae8ebe30be6be035e
+PODFILE CHECKSUM: 3c1918c02fe7431aae62a3d6df68a49f2b8f6d62
 
 COCOAPODS: 1.16.2

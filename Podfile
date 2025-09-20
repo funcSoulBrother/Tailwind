@@ -12,5 +12,6 @@ target 'Helping Hand' do
   # Pods for Helping Hand
   pod 'StartAppSDK'
   pod 'StepperView'
+  pod 'Google-Mobile-Ads-SDK'
 
 end
