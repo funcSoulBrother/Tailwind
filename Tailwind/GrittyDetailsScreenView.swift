@@ -43,8 +43,13 @@ struct GrittyDetailsScreenView: View {
                     Text("That's too long, I'm a busy person. Can I do it faster?")
                         .font(.title)
                         .fontWeight(.semibold)
-                    Text("Yes! This guide assumes that you can only do the bare minimum; that is, things you can do from anywhere at any time without any other players. But if you can perform just 1 of the following extra actions any time during the process, it’ll take 30 minutes off of the total time:")
-                        .padding(30)
+                    Text("Yes! If you interact with your buddy once (feed a berry, play, take a snapshot, or battle a team leader) 15 minutes after each cooldown period begins (the halfway mark) you can shorten the process by 30 minutes. Doing so will not give your buddy any more Emotion Points but you'll prevent its current Emotion Points level from decaying. Therefore, it'll take less time and interactions to make your buddy excited. Pro tip: turn on Halfway Notifications in the Settings tab. With this enabled, a notification will be sent at the halfway point of each cooldown period to remind you when it's time to interact with your buddy in order to prevent this Emotion Point decay.")
+                        .padding(.horizontal, 30)
+                        .padding(.top, 30)
+                    Text("If you don't want to bother with this method, there is another way to shorten the process. This guide assumes that you can only do the bare minimum; that is, things you can do from anywhere at any time without any other players. But if you can perform just 1 of the following extra actions any time during the process, it’ll take 30 minutes off of the total time:")
+                        .padding(.horizontal, 30)
+                        .padding(.bottom, 30)
+                        .padding(.top, 20)
                     Text("""
                             • Battle a Team GO Rocket member
                             • Battle in the GBL

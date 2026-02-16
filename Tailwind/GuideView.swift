@@ -10,56 +10,34 @@ import StartApp
 import StepperView
 
 struct GuideView: View {
-    
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.colorScheme) var colorScheme
+    @ObservedObject var buddyTasks: BuddyTasks
+    @ObservedObject var timerState: TimerState
     @State var isBlinking = false
-    @State var timeRemaining = 1_800 // (1_800 for 30 minutes)
-    @State var timerActive = false
-    @State var timer: Timer?
     @State var showRound1Alert = false
     @State var showStartOverAlert = false
     @State var showResetTimerAlert = false
-    @State var startTime: Date?
     @State var helpScreenShowing = false
-    @State var timerFirstStarted = false
+    @State var notificationPermissionScreenShowing = false
+    @State var notificationWarningTextShowing = false
+    @State var alarmPermissionScreenShowing = false
+    @State var alarmWarningTextShowing = false
+    @State var notificationViewModel = NotificationViewModel()
+    @State private var activeWarning: WarningType = .none
     @AppStorage("CurrentRound") var currentRound = 1
     @AppStorage("CurrentStep") var currentStep = 1
+    @AppStorage("CurrentStepperStep") var currentStepperStep = 0
+    @AppStorage("CooldownEndOption") var selectedOption: CooldownEndOption = .alarm
+    let notificationWarningText = "Notification permission has been denied so you will not see a notification when the cooldown period is over. Tap this message to turn on notifications in your phone's settings."
+    let alarmWarningText = "Alarm permission has been denied so an alarm won't go off when the cooldown period is over. Tap this message to turn on alarms in your phone's settings."
     @CompatibleAppStorage("TimerEndTime") var storedEndTime: Date?
     // Test ad unit ID - use this for testing
     private let testAdUnitID = "ca-app-pub-3940256099942544/2934735716"
     // Your real ad unit ID from AdMob console
     private let guideAdUnitID = "ca-app-pub-1269877083649460/4228051161"
     
-    struct Task: Identifiable {
-        let id = UUID()
-        let name: String
-        var isCompleted: Bool
-    }
-    
-    @State var round1Tasks = [
-        Task(name: "Feed your buddy a berry (three if you want to gain more Hearts)", isCompleted: false),
-        Task(name: "Play with your buddy", isCompleted: false),
-        Task(name: "Take a snapshot", isCompleted: false),
-        Task(name: "Battle a team leader", isCompleted: false)
-    ]
-    
-    @State var round2Or4Tasks = [
-        Task(name: "Feed your buddy one berry", isCompleted: false),
-        Task(name: "Play with your buddy", isCompleted: false),
-        Task(name: "Take a snapshot", isCompleted: false),
-        Task(name: "Battle a team leader", isCompleted: false)
-    ]
-    
-    @State var round3Tasks = [
-        Task(name: "Feed your buddy one berry (two if you fed your buddy three berries in Round 1 and you want another Heart)", isCompleted: false),
-        Task(name: "Play with your buddy", isCompleted: false),
-        Task(name: "Take a snapshot", isCompleted: false),
-        Task(name: "Battle a team leader", isCompleted: false)
-    ]
-    
     @State private var animateTask: UUID? = nil
-    @State private var currentStepperStep = 0
     let stepCount = 5
     
     //next two functions for stepper
@@ -118,11 +96,11 @@ struct GuideView: View {
                     if currentStep == 1 { // Beginning of Step 1 (Tasks)
                         LazyVStack {
                             if currentRound <= 4 {
-                                Text("Complete the following tasks with your buddy in Pokémon Go. After each task is completed and checked off, the Cool-down button will be enabled.")
+                                Text("Complete the following tasks with your buddy in Pokémon Go. After each task is completed and checked off, the Cooldown button will be enabled.")
                                     .fontWeight(.semibold)
                             }
                             if currentRound == 1 {
-                                ForEach($round1Tasks) { $task in
+                                ForEach($buddyTasks.round1Tasks) { $task in
                                     HStack {
                                         Text(task.name)
                                         Spacer()
@@ -146,7 +124,7 @@ struct GuideView: View {
                                 }
                             }
                             if currentRound == 2 || currentRound == 4 {
-                                ForEach($round2Or4Tasks) { $task in
+                                ForEach($buddyTasks.round2Or4Tasks) { $task in
                                     HStack {
                                         Text(task.name)
                                         Spacer()
@@ -170,7 +148,7 @@ struct GuideView: View {
                                 }
                             }
                             if currentRound == 3 {
-                                ForEach($round3Tasks) { $task in
+                                ForEach($buddyTasks.round3Tasks) { $task in
                                     HStack {
                                         Text(task.name)
                                         Spacer()
@@ -210,9 +188,9 @@ struct GuideView: View {
                         }
                         .padding()
                         
-                        if round1Tasks.allSatisfy({ $0.isCompleted }) || round2Or4Tasks.allSatisfy({ $0.isCompleted}) || round3Tasks.allSatisfy({ $0.isCompleted}) {
+                        if buddyTasks.round1Tasks.allSatisfy({ $0.isCompleted }) || buddyTasks.round2Or4Tasks.allSatisfy({ $0.isCompleted}) || buddyTasks.round3Tasks.allSatisfy({ $0.isCompleted}) {
                             if #available (iOS 17.0, *) {
-                                Button("Start Cool-down Timer") {
+                                Button("Start Cooldown Timer") {
                                     currentStep = 2
                                 }
                                 .fontWeight(.semibold)
@@ -224,7 +202,7 @@ struct GuideView: View {
                                     startBlinking()
                                 }
                             } else {
-                                Button("Start Cool-down Timer") {
+                                Button("Start Cooldown Timer") {
                                     currentStep = 2
                                     print("Step \(currentStep)")
                                 }
@@ -239,7 +217,7 @@ struct GuideView: View {
                             }
                         } else {
                             if currentRound != 5 {
-                                Button("Start Cool-down Timer") {
+                                Button("Start Cooldown Timer") {
                                     print("This button is disabled.")
                                 }
                                 .fontWeight(.semibold)
@@ -249,27 +227,31 @@ struct GuideView: View {
                                 .cornerRadius(10)
                             }
                         }
-                    } else { //Step 1 zone over, Step 2 zone begins (Cool-down)
+                    } else { //Step 1 zone over, Step 2 zone begins (Cooldown)
                         VStack {
-                            Text("Wait 30 minutes for the cool-down period before you start Round \(currentRound + 1).")
+                            Text("Wait 30 minutes for the cooldown period before you start Round \(currentRound + 1).")
                                 .fontWeight(.semibold)
                                 .padding()
                             if currentRound <= 4 {
-                                Text(formatTime(timeRemaining))
+                                Text(timerState.formatTime(timerState.timeRemaining))
                                     .contentTransition(.numericText())
-                                    .animation(.linear, value: timeRemaining)
+                                    .animation(.linear, value: timerState.timeRemaining)
                                     .font(.largeTitle)
                                     .fontWeight(.semibold)
                                     .padding()
                                 
                                 ZStack { //just to keep everything neatly in place when next round button appears
-                                    if timeRemaining != 0 {
+                                    if timerState.timeRemaining != 0 {
                                         HStack {
                                             Spacer().frame(width: 80)
-                                            if timerActive == false {
+                                            if timerState.timerActive == false {
                                                 VStack {
                                                     Button(action: {
-                                                        startTimer()
+                                                        if #available(iOS 26, *) {
+                                                            timerState.startTimer26()
+                                                        } else {
+                                                            timerState.startTimerLegacy()
+                                                        }
                                                     }) {
                                                         Image(systemName: "play.circle.fill")
                                                             .font(.system(size: 70))
@@ -278,7 +260,11 @@ struct GuideView: View {
                                                             .padding()
                                                     }
                                                     Button(action: {
-                                                        startTimer()
+                                                        if #available(iOS 26, *) {
+                                                            timerState.startTimer26()
+                                                        } else {
+                                                            timerState.startTimerLegacy()
+                                                        }
                                                     }) {
                                                         Text("Start Timer")
                                                             .foregroundColor(Color("ChuSecondary"))
@@ -287,7 +273,11 @@ struct GuideView: View {
                                             } else {
                                                 VStack {
                                                     Button(action: {
-                                                        pauseTimer()
+                                                        if #available(iOS 26, *) {
+                                                            timerState.pauseTimer26()
+                                                        } else {
+                                                            timerState.pauseTimerLegacy()
+                                                        }
                                                     }) {
                                                         Image(systemName: "pause.circle.fill")
                                                             .foregroundColor(Color("ChuSecondary"))
@@ -296,7 +286,11 @@ struct GuideView: View {
                                                             .padding()
                                                     }
                                                     Button(action: {
-                                                        pauseTimer()
+                                                        if #available(iOS 26, *) {
+                                                            timerState.pauseTimer26()
+                                                        } else {
+                                                            timerState.pauseTimerLegacy()
+                                                        }
                                                     }) {
                                                         Text("Pause Timer")
                                                             .foregroundColor(Color("ChuSecondary"))
@@ -315,14 +309,14 @@ struct GuideView: View {
                                                         .alert("Reset?", isPresented: $showResetTimerAlert) {
                                                             Button("No", role: .cancel) {}
                                                             Button("Yes I'm sure") {
-                                                                resetTimer()
+                                                                timerState.resetTimer()
                                                             }
                                                         } message: {
                                                             Text("Are you sure you want to reset the timer back to 30 minutes?")
                                                         }
                                                 }
                                                 Button(action: {
-                                                    resetTimer()
+                                                    timerState.resetTimer()
                                                 }) {
                                                     Text("Reset Timer")
                                                         .foregroundColor(Color("ChuTertiary"))
@@ -330,16 +324,74 @@ struct GuideView: View {
                                                 }
                                             }
                                         }
+                                        .sheet(isPresented: $notificationPermissionScreenShowing) {
+                                            NotificationPermissionView(timerState: timerState)
+                                                .presentationDetents([.medium, .large])
+                                                .presentationDragIndicator(.visible)
+                                        }
+                                        .sheet(isPresented: $alarmPermissionScreenShowing) {
+                                            if #available(iOS 26, *) {
+                                                AlarmPermissionView(timerState: timerState)
+                                                    .presentationDetents([.medium, .large])
+                                                    .presentationDragIndicator(.visible)
+                                            }
+                                        }
+                                        .onAppear() {
+                                            if selectedOption == .notification {
+                                                checkNotificationPermission()
+                                            } else {
+                                                if #available(iOS 26, *) {
+                                                    Task {
+                                                        await checkAlarmPermissionOrScheduleAlarm()
+                                                    }
+                                                } else {
+                                                    checkNotificationPermission()
+                                                }
+                                            }
+                                        }
+                                        .onChange(of: scenePhase) { phase in
+                                            if phase == .active {
+                                                if selectedOption == .notification {
+                                                    checkNotificationPermission()
+                                                    if timerState.timerActive == true && timerState.timeRemaining > 0 {
+                                                        notificationViewModel.cancelNotificationAlert()
+                                                        notificationViewModel.scheduleNotificationAlert(currentRound: currentRound, timeRemaining: timerState.timeRemaining)
+                                                    }
+                                                } else {
+                                                    if #available(iOS 26, *) {
+                                                        Task {
+                                                            await checkAlarmPermissionOrScheduleAlarm()
+                                                        }
+                                                    } else {
+                                                        checkNotificationPermission()
+                                                        if timerState.timerActive == true && timerState.timeRemaining > 0 {
+                                                            notificationViewModel.cancelNotificationAlert()
+                                                            notificationViewModel.scheduleNotificationAlert(currentRound: currentRound, timeRemaining: timerState.timeRemaining)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if let text = activeWarning.text {
+                                            Button(text) {
+                                                if let url = URL(string: UIApplication.openSettingsURLString) {
+                                                    UIApplication.shared.open(url)
+                                                }
+                                            }
+                                            .font(.caption2)
+                                            .background(.pink.opacity(0.0001))
+                                            .offset(y: -77)
+                                        }
                                     }
-                                    if timeRemaining == 0 {
+                                    if timerState.timeRemaining == 0 {
                                         if #available (iOS 17.0, *) {
                                             Button("Start Round \(currentRound + 1)") {
                                                 currentRound += 1
                                                 currentStep = 1
                                                 currentStepperStep += 1
-                                                timerFirstStarted = false
-                                                resetTimer()
-                                                resetTasks()
+                                                timerState.timerFirstStarted = false
+                                                timerState.resetTimer()
+                                                buddyTasks.resetTasks()
                                             }
                                             .fontWeight(.semibold)
                                             .padding(14)
@@ -354,9 +406,9 @@ struct GuideView: View {
                                                 currentRound += 1
                                                 currentStep = 1
                                                 currentStepperStep += 1
-                                                timerFirstStarted = false
-                                                resetTimer()
-                                                resetTasks()
+                                                timerState.timerFirstStarted = false
+                                                timerState.resetTimer()
+                                                buddyTasks.resetTasks()
                                             }
                                             .fontWeight(.semibold)
                                             .padding(14)
@@ -374,10 +426,14 @@ struct GuideView: View {
                         }
                         .onAppear() {
                             if currentStep != 1 {
-                                if !timerActive {
-                                    if !timerFirstStarted {
-                                        startTimer()
-                                        timerFirstStarted = true
+                                if !timerState.timerActive {
+                                    if !timerState.timerFirstStarted {
+                                        if #available(iOS 26, *) {
+                                            timerState.startTimer26()
+                                        } else {
+                                            timerState.startTimerLegacy()
+                                        }
+                                        timerState.timerFirstStarted = true
                                     }
                                 }
                             }
@@ -387,7 +443,7 @@ struct GuideView: View {
                                 print("Inactive")
                             } else if phase == .active {
                                 print("Active")
-                                restoreTimer()
+                                timerState.restoreTimer()
                             } else if phase == .background {
                                 print("Background")
                             }
@@ -437,87 +493,68 @@ struct GuideView: View {
         }
     }
     
-    
-    func startTimer() {
-        timerActive = true
-        startTime = Date()
-        storedEndTime = startTime!.addingTimeInterval(TimeInterval(timeRemaining))
-        
-        if timeRemaining > 0 {
-            let content = UNMutableNotificationContent()
-            content.title = "Time is Up!"
-            content.body = "Round \(currentRound) is done, return to Tailwind to move on to Round \(currentRound + 1)!"
-            content.sound = UNNotificationSound.default
-            
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeRemaining), repeats: false)
-            
-            let request = UNNotificationRequest(identifier: "TimerEndNotification", content: content, trigger: trigger)
-            
-            UNUserNotificationCenter.current().add(request)
-        }
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            if timeRemaining > 0 {
-                timeRemaining -= 1
-            } else {
-                timer?.invalidate()
-                timerActive = false
-            }
-        }
-    }
-    
-    func pauseTimer() {
-        timerActive = false
-        timer?.invalidate()
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["TimerEndNotification"])
-    }
-    
-    func resetTimer() {
-        pauseTimer()
-        timeRemaining = 1_800
-    }
-    
-    func formatTime(_ seconds: Int) -> String {
-        let minutes = seconds / 60
-        let seconds = seconds % 60
-        return String(format: "%02d:%02d", minutes, seconds)
-    }
-    
     func startOver() {
         currentRound = 1
         currentStep = 1
         currentStepperStep = 0
-        timerFirstStarted = false
-        resetTimer()
-        resetTasks()
-    }
-    
-    func restoreTimer() {
-        if timerActive {
-            let timeAppRestored = Date()
-            timeRemaining = Int(timeAppRestored.distance(to: storedEndTime ?? Date()))
-            if timeRemaining <= 0 {
-                timeRemaining = 0
-            }
-        } else { return }
-    }
-    
-    func resetTasks() {
-        for index in round1Tasks.indices {
-            round1Tasks[index].isCompleted = false
-        }
-        for index in round2Or4Tasks.indices {
-            round2Or4Tasks[index].isCompleted = false
-        }
-        for index in round3Tasks.indices {
-            round3Tasks[index].isCompleted = false
-        }
-        
+        timerState.timerFirstStarted = false
+        timerState.resetTimer()
+        buddyTasks.resetTasks()
     }
     
     private func startBlinking() {
         withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
             isBlinking.toggle()
+        }
+    }
+    
+    func checkNotificationPermission() {
+        // Get the current notification settings
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            if settings.authorizationStatus == .notDetermined {
+                // User hasn't been asked yet - request permission
+                print("Not determined - requesting permission")
+                notificationPermissionScreenShowing = true
+            } else if settings.authorizationStatus == .authorized {
+                // Permission granted - schedule notifications
+                activeWarning = .none
+                print("Authorized - can schedule notifications")
+            } else if settings.authorizationStatus == .denied {
+                // Permission denied - show alert to guide user to settings
+                activeWarning = .notification
+                print("Denied - prompt user to enable in Settings")
+            } else if settings.authorizationStatus == .provisional {
+                // Provisional authorization (iOS 12+)
+                print("Provisional authorization")
+            } else if settings.authorizationStatus == .ephemeral {
+                // Ephemeral authorization (App Clips)
+                print("Ephemeral authorization")
+            }
+        }
+    }
+    
+    @available(iOS 26, *)
+    func checkAlarmPermissionOrScheduleAlarm() async -> Bool {
+        let alarmViewModel = AlarmViewModel()
+        print("requestAlarmAuthorization called, current state: \(alarmViewModel.alarmManager.authorizationState)")
+        
+        switch alarmViewModel.alarmManager.authorizationState {
+        case .notDetermined:
+            print("State is notDetermined, requesting authorization...")
+            alarmPermissionScreenShowing = true
+            return false
+        case .denied:
+            activeWarning = .alarm
+            print("Authorization denied")
+            return false
+        case .authorized:
+            activeWarning = .none
+            alarmViewModel.scheduleCooldownAlarm(currentRound: currentRound, timeRemaining: self.timerState.timeRemaining)
+            print("Already authorized")
+            return true
+        @unknown default:
+            print("Unknown authorization state")
+            return false
         }
     }
 }
@@ -587,9 +624,9 @@ struct CompatibleAppStorage<Value> {
     }
 }
 
-struct TimerView_Previews: PreviewProvider {
-    static var previews: some View {
-            GuideView()
-        .previewLayout(.sizeThatFits)
-    }
-}
+//struct TimerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//            GuideView()
+//        .previewLayout(.sizeThatFits)
+//    }
+//}

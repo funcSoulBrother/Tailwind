@@ -56,7 +56,7 @@ struct HomeView: View {
                 }
                 
                 Button(action: {
-                    savedSelectedTab = 1
+                    savedSelectedTab = 0
                 }) {
                     Text("The Guide")
                         .frame(width: 275)
@@ -66,7 +66,6 @@ struct HomeView: View {
                         .foregroundColor(Color("EasyBG"))
                         .cornerRadius(10)
                 }
-                
             }
             .sheet(isPresented: $gettingStartedScreenShowing) {
                 HowToUseScreenView()

@@ -8,20 +8,73 @@
 
 /* Begin PBXBuildFile section */
 		29CBCF872D714336004E2E4D /* StartApp.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29CBCF862D714336004E2E4D /* StartApp.xcframework */; };
+		29E1B6A52EE55D1500F905D2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29A66D612EDD35AA00FD291B /* WidgetKit.framework */; };
+		29E1B6A62EE55D1500F905D2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29A66D632EDD35AA00FD291B /* SwiftUI.framework */; };
+		29E1B6B32EE55D1600F905D2 /* AlarmLiveActivityWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 29E1B6A42EE55D1500F905D2 /* AlarmLiveActivityWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4BA940082113918EA99F0D2D /* Pods_Helping_Hand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12408D9D1A76EB2EB80672A4 /* Pods_Helping_Hand.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		29E1B6B12EE55D1600F905D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29EFE37F2D18D68300BC547D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29E1B6A32EE55D1500F905D2;
+			remoteInfo = AlarmLiveActivityWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		29A66D722EDD35AC00FD291B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				29E1B6B32EE55D1600F905D2 /* AlarmLiveActivityWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		12408D9D1A76EB2EB80672A4 /* Pods_Helping_Hand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Helping_Hand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29A66D612EDD35AA00FD291B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		29A66D632EDD35AA00FD291B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		29CBCF722D7139D5004E2E4D /* Helping Hand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Helping Hand.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29CBCF862D714336004E2E4D /* StartApp.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = StartApp.xcframework; path = Pods/StartAppSDK/StartApp.xcframework; sourceTree = "<group>"; };
+		29E1B6A42EE55D1500F905D2 /* AlarmLiveActivityWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlarmLiveActivityWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8A1AC02F3232EE82BBA3A15 /* Pods-Tailwind.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tailwind.debug.xcconfig"; path = "Target Support Files/Pods-Tailwind/Pods-Tailwind.debug.xcconfig"; sourceTree = "<group>"; };
 		AF008987614E4C5A4EFD3309 /* Pods-Tailwind.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tailwind.release.xcconfig"; path = "Target Support Files/Pods-Tailwind/Pods-Tailwind.release.xcconfig"; sourceTree = "<group>"; };
 		E49423396AC4B5E5BE962729 /* Pods-Helping Hand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Helping Hand.debug.xcconfig"; path = "Target Support Files/Pods-Helping Hand/Pods-Helping Hand.debug.xcconfig"; sourceTree = "<group>"; };
 		E56A906BC2DD233D834013DF /* Pods-Helping Hand.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Helping Hand.release.xcconfig"; path = "Target Support Files/Pods-Helping Hand/Pods-Helping Hand.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		29E1B6B42EE55D1600F905D2 /* Exceptions for "AlarmLiveActivityWidget" folder in "AlarmLiveActivityWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 29E1B6A32EE55D1500F905D2 /* AlarmLiveActivityWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		29A66D652EDD35AA00FD291B /* CountDown */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CountDown;
+			sourceTree = "<group>";
+		};
+		29E1B6A72EE55D1500F905D2 /* AlarmLiveActivityWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				29E1B6B42EE55D1600F905D2 /* Exceptions for "AlarmLiveActivityWidget" folder in "AlarmLiveActivityWidgetExtension" target */,
+			);
+			path = AlarmLiveActivityWidget;
+			sourceTree = "<group>";
+		};
 		29EFE3892D18D68300BC547D /* Tailwind */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Tailwind;
@@ -30,6 +83,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		29E1B6A12EE55D1500F905D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29E1B6A62EE55D1500F905D2 /* SwiftUI.framework in Frameworks */,
+				29E1B6A52EE55D1500F905D2 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29EFE3842D18D68300BC547D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -47,8 +109,11 @@
 			children = (
 				29EFE3892D18D68300BC547D /* Tailwind */,
 				53F8DD50E251BC0C32806FA6 /* Pods */,
+				29A66D652EDD35AA00FD291B /* CountDown */,
+				29E1B6A72EE55D1500F905D2 /* AlarmLiveActivityWidget */,
 				FEE3943F80E6A9E3AC59A07A /* Frameworks */,
 				29CBCF722D7139D5004E2E4D /* Helping Hand.app */,
+				29E1B6A42EE55D1500F905D2 /* AlarmLiveActivityWidgetExtension.appex */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,6 +133,8 @@
 			children = (
 				29CBCF862D714336004E2E4D /* StartApp.xcframework */,
 				12408D9D1A76EB2EB80672A4 /* Pods_Helping_Hand.framework */,
+				29A66D612EDD35AA00FD291B /* WidgetKit.framework */,
+				29A66D632EDD35AA00FD291B /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -75,6 +142,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		29E1B6A32EE55D1500F905D2 /* AlarmLiveActivityWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29E1B6B52EE55D1600F905D2 /* Build configuration list for PBXNativeTarget "AlarmLiveActivityWidgetExtension" */;
+			buildPhases = (
+				29E1B6A02EE55D1500F905D2 /* Sources */,
+				29E1B6A12EE55D1500F905D2 /* Frameworks */,
+				29E1B6A22EE55D1500F905D2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				29E1B6A72EE55D1500F905D2 /* AlarmLiveActivityWidget */,
+			);
+			name = AlarmLiveActivityWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = AlarmLiveActivityWidgetExtension;
+			productReference = 29E1B6A42EE55D1500F905D2 /* AlarmLiveActivityWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		29EFE3862D18D68300BC547D /* Helping Hand */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29EFE3952D18D68400BC547D /* Build configuration list for PBXNativeTarget "Helping Hand" */;
@@ -85,10 +174,12 @@
 				29EFE3852D18D68300BC547D /* Resources */,
 				35D773BE67299CAC62E31FF8 /* [CP] Embed Pods Frameworks */,
 				D071D149A1C30E30FE46EAC2 /* [CP] Copy Pods Resources */,
+				29A66D722EDD35AC00FD291B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				29E1B6B22EE55D1600F905D2 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				29EFE3892D18D68300BC547D /* Tailwind */,
@@ -105,9 +196,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1620;
+				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					29E1B6A32EE55D1500F905D2 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
 					29EFE3862D18D68300BC547D = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -128,11 +222,19 @@
 			projectRoot = "";
 			targets = (
 				29EFE3862D18D68300BC547D /* Helping Hand */,
+				29E1B6A32EE55D1500F905D2 /* AlarmLiveActivityWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		29E1B6A22EE55D1500F905D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29EFE3852D18D68300BC547D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -210,6 +312,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		29E1B6A02EE55D1500F905D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29EFE3832D18D68300BC547D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -219,7 +328,77 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		29E1B6B22EE55D1600F905D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 29E1B6A32EE55D1500F905D2 /* AlarmLiveActivityWidgetExtension */;
+			targetProxy = 29E1B6B12EE55D1600F905D2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		29E1B6B62EE55D1600F905D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZR6QK73PFS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AlarmLiveActivityWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AlarmLiveActivityWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.CresylViolet.Tailwind.AlarmLiveActivityWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		29E1B6B72EE55D1600F905D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = ZR6QK73PFS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AlarmLiveActivityWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AlarmLiveActivityWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.CresylViolet.Tailwind.AlarmLiveActivityWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		29EFE3932D18D68400BC547D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -356,6 +535,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Tailwind;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This data will be used to deliver personalized ads to you. Seriously, I'm a Pokémon Go nerd. Even if I could look at your phone's activity I'm too busy shiny hunting.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -366,7 +546,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.22;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CresylViolet.Tailwind;
 				PRODUCT_NAME = "Helping Hand";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -392,6 +572,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Tailwind;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "This data will be used to deliver personalized ads to you. Seriously, I'm a Pokémon Go nerd. Even if I could look at your phone's activity I'm too busy shiny hunting.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -402,7 +583,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.22;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.CresylViolet.Tailwind;
 				PRODUCT_NAME = "Helping Hand";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -414,6 +595,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		29E1B6B52EE55D1600F905D2 /* Build configuration list for PBXNativeTarget "AlarmLiveActivityWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29E1B6B62EE55D1600F905D2 /* Debug */,
+				29E1B6B72EE55D1600F905D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		29EFE3822D18D68300BC547D /* Build configuration list for PBXProject "Helping Hand" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

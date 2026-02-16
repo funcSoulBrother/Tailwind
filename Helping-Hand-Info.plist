@@ -4,12 +4,14 @@
 <dict>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-1269877083649460~7380683952</string>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>Alarms are used for the end of cooldown periods.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
 	<key>NSUserNotificationsUsageDescription</key>
-	<string>You should probably hit Allow, otherwise you won't get a notification when the timer is done. </string>
+	<string>Notifications are used for the end of cooldown periods and halfway reminders.</string>
 </dict>
 </plist>

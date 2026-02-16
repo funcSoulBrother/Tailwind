@@ -60,10 +60,10 @@ struct HowToUseScreenView: View {
                     .padding()
                     .padding(.trailing, 20)
                 }
-                Text("Once a task is completed in Pokémon Go, return to Tailwind and check it off the list by tapping the box next to it. After every task is checked off, the button that will start the cool-down timer will activate. Tap it as soon as you can.")
+                Text("Once a task is completed in Pokémon Go, return to Tailwind and check it off the list by tapping the box next to it. After every task is checked off, the button that will start the cooldown timer will activate. Tap it as soon as you can.")
                     .padding(20)
                 if exampleTasks.allSatisfy({ $0.isCompleted }) {
-                    Button("Start Cool-down (Example)") {
+                    Button("Start Cooldown (Example)") {
                         print("This is an example button. Yay!!!!")
                     }
                     .padding()
@@ -72,7 +72,7 @@ struct HowToUseScreenView: View {
                     .cornerRadius(10)
                     .padding()
                 } else {
-                    Button("Start Cool-down (Example)") {
+                    Button("Start Cooldown (Example)") {
                         print("This is an example button. Wonderful.")
                     }
                     .padding()
@@ -82,7 +82,7 @@ struct HowToUseScreenView: View {
                     .padding()
                 }
                 
-                Text("Tapping the button will start the 30-minute cool-down timer. You have to wait this amount of time or else the next round's tasks won't count. Once the timer goes off a button will appear that will take you to the next round.")
+                Text("Tapping the button will start the 30-minute cooldown timer. You have to wait this amount of time or else the next round's tasks won't count. Once the timer goes off a button will appear that will take you to the next round.")
                     .padding(20)
                 Text("The whole process will take a little more than 2 hours if you just go by this guide. Read the \"Mechanics\" section to see how it can be done in 1.5 hours. Have fun spoiling your buddy!")
                     .padding(.horizontal, 20)
