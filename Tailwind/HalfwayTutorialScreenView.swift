@@ -25,6 +25,7 @@ struct HalfwayTutorialScreenView: View {
                 }) {
                     Text("Dismiss")
                         .frame(width: 100)
+                        .fontWeight(.semibold)
                         .padding()
                         .background(Color("ChuSecondary"))
                         .foregroundColor(.white)

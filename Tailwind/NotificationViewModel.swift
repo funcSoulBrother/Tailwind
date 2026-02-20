@@ -45,12 +45,12 @@ struct NotificationViewModel {
         content.body = "Interact with your buddy now to prevent EP decay!"
         content.sound = UNNotificationSound.default
             
-        let interval = max(1, timeRemaining - 15)
+        let interval = max(1, timeRemaining - 900)
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(interval), repeats: false)
             
         let request = UNNotificationRequest(identifier: "HalfwayNotification", content: content, trigger: trigger)
             
-        if timeRemaining > 15 {
+        if timeRemaining > 900 {
             UNUserNotificationCenter.current().add(request)
         }
     }
@@ -66,5 +66,4 @@ struct NotificationViewModel {
             }
         }
     }
-    
 }

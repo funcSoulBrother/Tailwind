@@ -14,12 +14,11 @@ final class TimerState: ObservableObject {
     @AppStorage("CurrentRound") var currentRound = 1
     @AppStorage("CooldownEndOption") var selectedOption: CooldownEndOption = .alarm
     @AppStorage("HalwayNotificationOption") var selectedHalfwayOption: HalfwayNotificationOption = .off
+    @AppStorage("TimerActive") var timerActive = false
+    @AppStorage("TimerFirstStarted") var timerFirstStarted = false
     @CompatibleAppStorage("TimerEndTime") var storedEndTime: Date?
-    ///change to 1_800 after testing
-    @Published var timeRemaining = 30 // (1_800 for 30 minutes)
-    @Published var halfwayTimeRemaining = 15 // (900 for 15 minutes)
-    @Published var timerActive = false
-    @Published var timerFirstStarted = false
+    @Published var timeRemaining = 1_800 // (1_800 for 30 minutes)
+    @Published var halfwayTimeRemaining = 900 // (900 for 15 minutes)
     @Published var startTime: Date?
     @Published var timer: Timer?
     let notificationViewModel = NotificationViewModel()
@@ -110,8 +109,7 @@ final class TimerState: ObservableObject {
         } else {
             pauseTimerLegacy()
         }
-        ///change to 1_800 later
-        timeRemaining = 30
+        timeRemaining = 1_800
     }
     
     func formatTime(_ seconds: Int) -> String {
@@ -121,13 +119,31 @@ final class TimerState: ObservableObject {
     }
     
     func restoreTimer() {
-        if timerActive {
-            let timeAppRestored = Date()
-            timeRemaining = Int(timeAppRestored.distance(to: storedEndTime ?? Date()))
-            if timeRemaining <= 0 {
-                timeRemaining = 0
+        guard timerActive else { return }
+        guard let endTime = storedEndTime else {
+            timerActive = false
+            return
+        }
+
+        let remaining = Int(Date().distance(to: endTime))
+
+        if remaining <= 0 {
+            timeRemaining = 0
+            timerActive = false
+            timer?.invalidate()
+        } else {
+            timeRemaining = remaining
+            // Re-attach the live timer since it was lost when app was killed
+            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                if self.timeRemaining > 0 {
+                    self.timeRemaining -= 1
+                } else {
+                    self.timer?.invalidate()
+                    self.timerActive = false
+                }
             }
-        } else { return }
+        }
     }
 
 }
