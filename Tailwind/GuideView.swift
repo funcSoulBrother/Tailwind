@@ -326,7 +326,7 @@ struct GuideView: View {
                                         }
                                         .sheet(isPresented: $notificationPermissionScreenShowing) {
                                             NotificationPermissionView(timerState: timerState)
-                                                .presentationDetents([.medium, .large])
+                                                .presentationDetents([.height(500), .large])
                                                 .presentationDragIndicator(.visible)
                                         }
                                         .sheet(isPresented: $alarmPermissionScreenShowing) {

@@ -125,7 +125,7 @@ struct GrittyDetailsScreenView: View {
                     Button(action: {
                         dismiss()
                     }) {
-                        Text("Alright!")
+                        Text("Go Back")
                             .frame(width: 100)
                             .padding()
                             .background(Color("ChuSecondary"))

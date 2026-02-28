@@ -11,7 +11,7 @@ import AppTrackingTransparency
 
 struct ContentView: View {
     
-    @AppStorage("LastSelectedTab") var savedSelectedTab: Int = 1
+    @AppStorage("LastSelectedTab") var savedSelectedTab: Int = 0
     @AppStorage("OnboardingScreenShows") private var willOnboardingScreenShow = true
     @AppStorage("CurrentRound") var currentRound = 1
     @StateObject private var buddyTasks = BuddyTasks()
@@ -19,14 +19,14 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $savedSelectedTab) {
-            GuideView(buddyTasks: buddyTasks, timerState: timerState)
-                .tabItem{
-                    Label("The Guide", systemImage: "map.fill")
-                }
-                .tag(0)
             HomeView()
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
+                }
+                .tag(0)
+            GuideView(buddyTasks: buddyTasks, timerState: timerState)
+                .tabItem{
+                    Label("The Guide", systemImage: "map.fill")
                 }
                 .tag(1)
             if #available(iOS 26.0, *) {

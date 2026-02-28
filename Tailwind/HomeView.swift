@@ -56,7 +56,7 @@ struct HomeView: View {
                 }
                 
                 Button(action: {
-                    savedSelectedTab = 0
+                    savedSelectedTab = 1
                 }) {
                     Text("The Guide")
                         .frame(width: 275)

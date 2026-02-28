@@ -91,7 +91,7 @@ struct HowToUseScreenView: View {
                 Button(action: {
                     dismiss()
                 }) {
-                    Text("Got it!")
+                    Text("Go Back")
                         .frame(width: 100)
                         .padding()
                         .background(Color("ChuSecondary"))

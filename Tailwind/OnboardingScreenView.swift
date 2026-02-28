@@ -53,7 +53,7 @@ struct OnboardingScreen: View {
                 }
                 VStack(alignment: .center){
                     Button(action: { willOnboardingScreenShow.toggle()}) {
-                        Text("Cool, Let's Do This!")
+                        Text("Dismiss")
                             .padding()
                             .background(Color("ChuSecondary"))
                             .foregroundColor(.white)
