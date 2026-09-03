@@ -1,1 +1,70 @@
-# HelpingHand
+# Tailwind
+
+Tailwind is a native iOS application that provides an interactive guide that helps Pokémon GO players achieve the "Excited" Buddy status without using a Poffin.
+
+[![Download on the App Store](./Tailwind/Assets.xcassets/AppStoreBadge.svg)](https://apps.apple.com/us/app/tailwind-guide/id6743378214)
+
+## Overview
+
+As a Pokémon Go player I always found the hidden process of making your buddy excited without a Poffin to be excessively complicated. I noticed that there were plenty of Reddit guides and infographics but recognized that an interactive guide would make the process infinitely more achievable and accessible to the average player. I decided that Tailwind was the perfect way to fill this niche while being a perfect beginning project to get my feet wet in the world of Swift and the App Store! 
+
+## Screenshots
+
+<p align="center">
+  <img src="..." width="250">
+  <img src="..." width="250">
+  <img src="..." width="250">
+</p>
+
+## Features
+
+- Checklist of things to do in order to excite your buddy
+- Timers to let you know exactly when to do them
+- Get notified when the timer ends by alarm (more intrusive) or by notification (less intrusive)
+- Optional halfway reminders to make the process even faster
+- Detailed mechanics explanation for users who want to dive deeper
+
+## Technologies
+
+- **Swift/SwiftUI** - Application development and user interface
+- **UserNotifications** - Local notifications sent to user when timer ends and/or halfway reminders
+- **AlarmKit** - Used to display time remaining on Dynamic Island and to get an alarm-style alert when timer ends
+- **AppStorage** - Used to save users' settings and place in the guide when the app is inactive
+- **Google Mobile Ads SDK** - used to display ad banners
+
+## Architecture
+
+Structured using MVVM principles, with responsibilities separated between SwiftUI views, application logic, and data/state management. As my first iOS project, the architecture evolved as I became more familiar with Swift and SwiftUI.
+
+## Development Highlights
+
+- Implemented timer persistence so countdown progress could be restored after the app was closed, learning and applying Apple's date and time APIs to determine how to reliably calculate elapsed time.
+- Added AlarmKit-powered alarm as an option after its introduction in iOS 26, providing a more appropriate and interactive way to alert users when timers completed.
+- Managed the App Store submission and review process, addressing Apple's review feedback and ultimately releasing the application successfully.
+- Switched from Start.io to Google AdMob after encountering issues with ad availability, integrating a new advertising SDK into the application.
+
+## Requirements
+
+- Xcode 26.4+
+- iOS 26.0+
+- macOS 15.0+
+
+## Installation
+
+1. Clone the repository.
+2. Open `SideC.xcodeproj` in Xcode.
+3. Select a simulator or connected device.
+4. Build and run the application.
+
+## What I Learned
+
+Building Tailwind gave me hands-on experience with:
+
+- Swift and SwiftUI application development
+- Managing state and persistent app data
+- Working with timers and Apple's date/time APIs
+- Local notifications and alarms
+- Integrating and replacing third-party SDKs
+- Debugging and troubleshooting real-world application issues
+- Preparing an application for App Store review and release
+- 
