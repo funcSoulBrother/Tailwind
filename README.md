@@ -26,11 +26,11 @@ As a Pokémon Go player I always found the hidden process of making your buddy e
 
 ## Technologies
 
-- **Swift/SwiftUI** - Application development and user interface
-- **UserNotifications** - Local notifications sent to user when timer ends and/or halfway reminders
-- **AlarmKit** - Used to display time remaining on Dynamic Island and to get an alarm-style alert when timer ends
-- **AppStorage** - Used to save users' settings and place in the guide when the app is inactive
-- **Google Mobile Ads SDK** - used to display ad banners
+- **Swift/SwiftUI** — Application development and user interface
+- **UserNotifications** — Local notifications for timer completion and halfway reminders
+- **AlarmKit** — Displays timer information on the Dynamic Island and provides an alarm-style alert when the timer ends
+- **AppStorage** — Persists user settings and their current position in the guide
+- **Google Mobile Ads SDK** — Displays banner advertisements
 
 ## Architecture
 
@@ -38,10 +38,12 @@ Structured using MVVM principles, with responsibilities separated between SwiftU
 
 ## Development Highlights
 
-- Implemented timer persistence so countdown progress could be restored after the app was closed, learning and applying Apple's date and time APIs to determine how to reliably calculate elapsed time.
-- Added AlarmKit-powered alarm as an option after its introduction in iOS 26, providing a more appropriate and interactive way to alert users when timers completed.
+- Implemented timer persistence so countdown progress could be restored after the app was closed, using Apple's date and time APIs to reliably calculate elapsed time.
+- Added an AlarmKit-powered alarm as an option after its introduction in iOS 26, providing a more appropriate and interactive way to alert users when timers completed.
+- Integrated local notifications for timer completion and halfway reminders.
 - Managed the App Store submission and review process, addressing Apple's review feedback and ultimately releasing the application successfully.
-- Switched from Start.io to Google AdMob after encountering issues with ad availability, integrating a new advertising SDK into the application.
+- Debugged and troubleshot real-world application issues throughout development.
+- Switched from Start.io to Google AdMob after encountering issues with ad availability, integrating and configuring a new advertising SDK.
 
 ## Requirements
 
@@ -56,15 +58,3 @@ Structured using MVVM principles, with responsibilities separated between SwiftU
 3. Select a simulator or connected device.
 4. Build and run the application.
 
-## What I Learned
-
-Building Tailwind gave me hands-on experience with:
-
-- Swift and SwiftUI application development
-- Managing state and persistent app data
-- Working with timers and Apple's date/time APIs
-- Local notifications and alarms
-- Integrating and replacing third-party SDKs
-- Debugging and troubleshooting real-world application issues
-- Preparing an application for App Store review and release
-- 
