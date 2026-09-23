@@ -47,14 +47,14 @@ Structured using MVVM principles, with responsibilities separated between SwiftU
 
 ## Requirements
 
-- Xcode 26.4+
-- iOS 26.0+
-- macOS 15.0+
+- iOS: 16.0 or later
+- To build: Xcode 26 or later, on macOS Sequoia 15.6 or later
 
 ## Installation
 
 1. Clone the repository.
-2. Open `SideC.xcodeproj` in Xcode.
+2. Open `Helping Hand.xcworkspace` in Xcode.
 3. Select a simulator or connected device.
-4. Build and run the application.
+4. Build and run the application.<img width="1206" height="2622" alt="READMEScreenshotHome" src="https://github.com/user-attachments/assets/20258032-7614-44b2-91c8-8d587247e274" />
+
 
