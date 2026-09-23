@@ -10,11 +10,22 @@ As a Pokémon Go player I always found the hidden process of making your buddy e
 
 ## Screenshots
 
-<p align="center">
-  <img src="Tailwind/Promotional Screenshots/READMEScreenshotHome.png" width="250">
-  <img src="Tailwind/Promotional Screenshots/READMEScreenshotChecklist.png" width="250">
-  <img src="Tailwind/Promotional Screenshots/READMEScreenshotTimer.png" width="250">
-</p>
+<table>
+  <tr>
+    <td align="center">
+      <img src="Promotional%20Screenshots/READMEScreenshotHome.png" width="250" alt="Tailwind Home Screen"><br>
+      <strong>Home</strong>
+    </td>
+    <td align="center">
+      <img src="Promotional%20Screenshots/READMEScreenshotChecklist.png" width="250" alt="Tailwind Checklist"><br>
+      <strong>Checklist (Step 1)</strong>
+    </td>
+    <td align="center">
+      <img src="Promotional%20Screenshots/READMEScreenshotTimer.png" width="250" alt="Tailwind Timer"><br>
+      <strong>Timer (Step 2)</strong>
+    </td>
+  </tr>
+</table>
 
 ## Features
 
