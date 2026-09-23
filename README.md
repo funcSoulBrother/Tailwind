@@ -11,9 +11,9 @@ As a Pokémon Go player I always found the hidden process of making your buddy e
 ## Screenshots
 
 <p align="center">
-  <img src="..." width="250">
-  <img src="..." width="250">
-  <img src="..." width="250">
+  <img src="Tailwind/Promotional Screenshots/READMEScreenshotHome.png" width="250">
+  <img src="Tailwind/Promotional Screenshots/READMEScreenshotChecklist.png" width="250">
+  <img src="Tailwind/Promotional Screenshots/READMEScreenshotTimer.png" width="250">
 </p>
 
 ## Features
@@ -55,6 +55,6 @@ Structured using MVVM principles, with responsibilities separated between SwiftU
 1. Clone the repository.
 2. Open `Helping Hand.xcworkspace` in Xcode.
 3. Select a simulator or connected device.
-4. Build and run the application.<img width="1206" height="2622" alt="READMEScreenshotHome" src="https://github.com/user-attachments/assets/20258032-7614-44b2-91c8-8d587247e274" />
+4. Build and run the application.
 
 
