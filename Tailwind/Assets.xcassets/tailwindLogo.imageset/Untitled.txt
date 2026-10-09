@@ -1,0 +1,23 @@
+Cancel Notification: 
+UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["TimerEndNotification"])
+
+
+
+Start Notification: 
+        if timeRemaining > 0 {
+            let content = UNMutableNotificationContent()
+            content.title = "Time is Up!"
+            content.body = "Round \(currentRound) is done, return to Tailwind to move on to Round \(currentRound + 1)!"
+            content.sound = UNNotificationSound.default
+            
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeRemaining), repeats: false)
+            
+            let request = UNNotificationRequest(identifier: "TimerEndNotification", content: content, trigger: trigger)
+            
+            UNUserNotificationCenter.current().add(request)
+        }
+
+
+Start Alarm:
+
+Version 2.0 introduces alarm functionality for users with iOS 26. Choose between alarms or notifications to let you know when cooldown periods are over! Version 2.0 also introduces halfway reminders which, when utilized, helps you decrease the time it takes to make your buddy excited!

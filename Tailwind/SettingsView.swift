@@ -13,10 +13,12 @@ struct SettingsView: View {
     @AppStorage("CooldownEndOption") var selectedOption: CooldownEndOption = .alarm
     @AppStorage("HalwayNotificationOption") var selectedHalfwayOption: HalfwayNotificationOption = .off
     @AppStorage("CurrentRound") var currentRound = 1
+    @AppStorage("TimerButtonAlwaysTappableOption") var selectedTimerButtonTappableOption: TimerButtonAlwaysTappable = .no
     @State var halfwayTutorialScreenShowing = false
     let halfwayWarningText = "Notification permission has been denied so you will not see halfway notifications. Tap this message to enable notifications in Settings."
     let options = CooldownEndOption.allCases
     let optionsHalfway = HalfwayNotificationOption.allCases
+    let optionsTimerButtonTappable = TimerButtonAlwaysTappable.allCases
     @StateObject var settingsViewModel: SettingsViewModel
     init(timerState: TimerState) {
         _settingsViewModel = StateObject(
@@ -28,23 +30,24 @@ struct SettingsView: View {
         VStack {
             Text("Cooldown End Alert Type")
                 .foregroundColor(Color("ChuQuaternary"))
-                .font(.largeTitle)
-                .padding(.bottom, 25)
-                .padding(.horizontal, 20)
+                .font(.title)
+                .frame(maxWidth: .infinity, alignment: .leading)
+//                .padding(.bottom, 25)
+                .padding(.horizontal, 30)
             toggle
             Text("Halfway Notifications")
                 .foregroundColor(Color("ChuQuaternary"))
-                .font(.largeTitle)
-                .padding(.bottom, 25)
-                .padding(.horizontal, 20)
-                .padding(.top, 50)
+                .font(.title)
+                .frame(maxWidth: .infinity, alignment: .leading)
+//                .padding(.bottom, 25)
+                .padding(.horizontal, 30)
+                .padding(.top, 55)
             toggleHalfway
             Button("What's This?") {
                 halfwayTutorialScreenShowing = true
             }
             .font(.headline)
             .frame(maxWidth: .infinity, alignment: .trailing)
-            .padding(.top, 20)
             .padding(.trailing, 20)
             Button(halfwayWarningText) {
                 if let url = URL(string: UIApplication.openSettingsURLString) {
@@ -54,6 +57,14 @@ struct SettingsView: View {
             .font(.caption2)
             .background(.pink.opacity(0.0001))
             .opacity(settingsViewModel.halfwayWarningTextShowing == true ? 1 : 0)
+            Text("Timer Button Always Tappable")
+                .foregroundColor(Color("ChuQuaternary"))
+                .font(.title)
+                .frame(maxWidth: .infinity, alignment: .leading)
+//                .padding(.bottom, 25)
+                .padding(.leading, 30)
+            toggleTimerButtonTappable
+//            Spacer()
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active {
@@ -141,6 +152,41 @@ struct SettingsView: View {
                     )
                     .background(
                         selectedHalfwayOption == option ? Color("ChuSecondary") : Color.gray.opacity(0.2)
+                    )
+                    .cornerRadius(10)
+                }
+            }
+        }
+        .padding(.horizontal, 30)
+    }
+    
+    private var toggleTimerButtonTappable: some View {
+        HStack {
+            ForEach(optionsTimerButtonTappable) { option in
+                Button {
+                    Task {
+                        selectedTimerButtonTappableOption = option
+                        if selectedTimerButtonTappableOption == .yes {
+                            //nothing needed in here
+                        } else {
+                            //nothing needed in here either
+                        }
+                    }
+                } label: {
+                    VStack {
+                        Image(systemName: option.image)
+                            .symbolEffect(.drawOn.individually, isActive: selectedTimerButtonTappableOption != option)
+                            .font(.largeTitle)
+                        Text(option.name)
+                    }
+                    .padding()
+                    .fontWeight(.medium)
+                    .frame(maxWidth: .infinity)
+                    .foregroundStyle(
+                        selectedTimerButtonTappableOption == option ? .white : .secondary
+                    )
+                    .background(
+                        selectedTimerButtonTappableOption == option ? Color("ChuSecondary") : Color.gray.opacity(0.2)
                     )
                     .cornerRadius(10)
                 }

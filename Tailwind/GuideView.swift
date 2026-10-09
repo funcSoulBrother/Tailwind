@@ -29,12 +29,13 @@ struct GuideView: View {
     @AppStorage("CurrentStep") var currentStep = 1
     @AppStorage("CurrentStepperStep") var currentStepperStep = 0
     @AppStorage("CooldownEndOption") var selectedOption: CooldownEndOption = .alarm
+    @AppStorage("TimerButtonAlwaysTappableOption") var selectedTimerButtonTappableOption: TimerButtonAlwaysTappable = .no
     let notificationWarningText = "Notification permission has been denied so you will not see a notification when the cooldown period is over. Tap this message to turn on notifications in your phone's settings."
     let alarmWarningText = "Alarm permission has been denied so an alarm won't go off when the cooldown period is over. Tap this message to turn on alarms in your phone's settings."
     @CompatibleAppStorage("TimerEndTime") var storedEndTime: Date?
-    // Test ad unit ID - use this for testing
+    // Test ad unit ID
     private let testAdUnitID = "ca-app-pub-3940256099942544/2934735716"
-    // Your real ad unit ID from AdMob console
+    // Real ad unit ID
     private let guideAdUnitID = "ca-app-pub-1269877083649460/4228051161"
     
     @State private var animateTask: UUID? = nil
@@ -188,32 +189,40 @@ struct GuideView: View {
                         }
                         .padding()
                         
-                        if buddyTasks.round1Tasks.allSatisfy({ $0.isCompleted }) || buddyTasks.round2Or4Tasks.allSatisfy({ $0.isCompleted}) || buddyTasks.round3Tasks.allSatisfy({ $0.isCompleted}) {
+                        if buddyTasks.round1Tasks.allSatisfy({ $0.isCompleted }) || buddyTasks.round2Or4Tasks.allSatisfy({ $0.isCompleted}) || buddyTasks.round3Tasks.allSatisfy({ $0.isCompleted}) || selectedTimerButtonTappableOption == .yes {
                             if #available (iOS 17.0, *) {
-                                Button("Start Cooldown Timer") {
-                                    currentStep = 2
+                                if selectedTimerButtonTappableOption == .yes { //non-blinking button for iOS 17 and later
+                                    Button("Start Cooldown Timer") {
+                                        currentStep = 2
+                                    }
+                                    .fontWeight(.semibold)
+                                    .padding(14)
+                                    .background(Color("ChuSecondary"))
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                } else { //blinking button
+                                    Button("Start Cooldown Timer") {
+                                        currentStep = 2
+                                    }
+                                    .fontWeight(.semibold)
+                                    .padding(14)
+                                    .background(isBlinking ? Color(Color("ChuQuaternary")) : Color("ChuSecondary"))
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                                    .onAppear {
+                                        startBlinking()
+                                    }
                                 }
-                                .fontWeight(.semibold)
-                                .padding(14)
-                                .background(isBlinking ? Color(Color("ChuSecondary")) : Color("ChuQuaternary"))
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                                .onAppear {
-                                    startBlinking()
-                                }
-                            } else {
+                            } else { //non-blinking button for earlier than iOS 17
                                 Button("Start Cooldown Timer") {
                                     currentStep = 2
                                     print("Step \(currentStep)")
                                 }
                                 .fontWeight(.semibold)
                                 .padding(14)
-                                .background(Color("ChuQuaternary"))
+                                .background(Color("ChuSecondary"))
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
-                                .onAppear {
-                                    startBlinking()
-                                }
                             }
                         } else {
                             if currentRound != 5 {
@@ -233,12 +242,20 @@ struct GuideView: View {
                                 .fontWeight(.semibold)
                                 .padding()
                             if currentRound <= 4 {
-                                Text(timerState.formatTime(timerState.timeRemaining))
-                                    .contentTransition(.numericText())
-                                    .animation(.linear, value: timerState.timeRemaining)
-                                    .font(.largeTitle)
-                                    .fontWeight(.semibold)
-                                    .padding()
+                                if #available (iOS 17.0, *) {
+                                    Text(timerState.formatTime(timerState.timeRemaining))
+                                        .contentTransition(.numericText())
+                                        .animation(.linear, value: timerState.timeRemaining)
+                                        .font(.largeTitle)
+                                        .fontWeight(.semibold)
+                                        .padding()
+                                } else { //figured out that the animation doesn't work so great on anything earlier than iOS 17
+                                    Text(timerState.formatTime(timerState.timeRemaining))
+                                        .contentTransition(.numericText())
+                                        .font(.largeTitle)
+                                        .fontWeight(.semibold)
+                                        .padding()
+                                }
                                 
                                 ZStack { //just to keep everything neatly in place when next round button appears
                                     if timerState.timeRemaining != 0 {

@@ -42,9 +42,15 @@ struct OnboardingScreen: View {
                     }
                     .padding()
                     HStack{
-                        Image(systemName: "brain.fill")
-                            .font(.title)
-                            .foregroundColor(Color("ChuPrimary"))
+                        if #available (iOS 17, *) {
+                            Image(systemName: "brain.fill")
+                                .font(.title)
+                                .foregroundColor(Color("ChuPrimary"))
+                        } else {
+                            Image(systemName: "lightbulb.fill")
+                                .font(.title)
+                                .foregroundStyle(Color("ChuPrimary"))
+                        }
                         Text("For all the gritty details go to the \"Mechanics\" section. This is where you’ll find a more detailed explanation of excitement and its mechanics. There are also some tips and tricks included that explain ways to make your buddy excited quicker and easier. Level up your excitement game!")
                             .font(.title3)
                             .fontWeight(.light)

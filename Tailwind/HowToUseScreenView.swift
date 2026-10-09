@@ -60,7 +60,7 @@ struct HowToUseScreenView: View {
                     .padding()
                     .padding(.trailing, 20)
                 }
-                Text("Once a task is completed in Pokémon Go, return to Tailwind and check it off the list by tapping the box next to it. After every task is checked off, the button that will start the cooldown timer will activate. Tap it as soon as you can.")
+                Text("Once a task is completed in Pokémon Go, return to Tailwind and check it off the list by tapping the box next to it. After every task is checked off, the button that will start the cooldown timer will activate. Tap it as soon as you can. (Alternatively, if you don't want to have to check every box to start the timer every time, go to Settings and set Timer Button Always Tappable to Yes)")
                     .padding(20)
                 if exampleTasks.allSatisfy({ $0.isCompleted }) {
                     Button("Start Cooldown (Example)") {

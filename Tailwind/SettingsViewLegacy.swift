@@ -12,8 +12,10 @@ struct SettingsViewLegacy: View {
     @AppStorage("CooldownEndOption") var selectedOption: CooldownEndOption = .alarm
     @AppStorage("HalwayNotificationOption") var selectedHalfwayOption: HalfwayNotificationOption = .off
     @AppStorage("CurrentRound") var currentRound = 1
+    @AppStorage("TimerButtonAlwaysTappableOption") var selectedTimerButtonTappableOption: TimerButtonAlwaysTappable = .no
     @State var halfwayTutorialScreenShowing = false
     let optionsHalfway = HalfwayNotificationOption.allCases
+    let optionsTimerButtonTappable = TimerButtonAlwaysTappable.allCases
     @StateObject var settingsViewModelLegacy: SettingsViewModelLegacy
     init(timerState: TimerState) {
         _settingsViewModelLegacy = StateObject(
@@ -26,10 +28,9 @@ struct SettingsViewLegacy: View {
         VStack {
             Text("Halfway Notifications")
                 .foregroundColor(Color("ChuQuaternary"))
-                .font(.largeTitle)
-                .padding(.bottom, 25)
-                .padding(.horizontal, 20)
-                .padding(.top, 50)
+                .font(.title)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 30)
             toggleHalfway
             Button("What's This?") {
                 halfwayTutorialScreenShowing = true
@@ -46,6 +47,12 @@ struct SettingsViewLegacy: View {
             .font(.caption2)
             .background(.pink.opacity(0.0001))
             .opacity(settingsViewModelLegacy.halfwayWarningTextShowing == true ? 1 : 0)
+            Text("Timer Button Always Tappable")
+                .foregroundColor(Color("ChuQuaternary"))
+                .font(.title)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 30)
+            toggleTimerButtonTappable
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active {
@@ -92,6 +99,41 @@ struct SettingsViewLegacy: View {
                     )
                     .background(
                         selectedHalfwayOption == option ? Color("ChuSecondary") : Color.gray.opacity(0.2)
+                    )
+                    .cornerRadius(10)
+                }
+            }
+        }
+        .padding(.horizontal, 30)
+    }
+    
+    private var toggleTimerButtonTappable: some View {
+        HStack {
+            ForEach(optionsTimerButtonTappable) { option in
+                Button {
+                    Task {
+                        selectedTimerButtonTappableOption = option
+                        if selectedTimerButtonTappableOption == .yes {
+                            //nothing needed in here
+                        } else {
+                            //nothing needed in here either
+                        }
+                    }
+                } label: {
+                    VStack {
+                            Image(systemName: option.image)
+                                .font(.largeTitle)
+                                .opacity(selectedTimerButtonTappableOption == option ? 1 : 0)
+                        Text(option.name)
+                    }
+                    .padding()
+                    .fontWeight(.medium)
+                    .frame(maxWidth: .infinity)
+                    .foregroundStyle(
+                        selectedTimerButtonTappableOption == option ? .white : .secondary
+                    )
+                    .background(
+                        selectedTimerButtonTappableOption == option ? Color("ChuSecondary") : Color.gray.opacity(0.2)
                     )
                     .cornerRadius(10)
                 }
